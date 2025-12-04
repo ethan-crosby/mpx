@@ -47,3 +47,5 @@ app.*.map.json
 # Environment variables
 .env
 .env.local
+lib/api_example.dart
+lib/repo_example.dart
