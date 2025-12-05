@@ -23,14 +23,12 @@ class MyApp extends StatelessWidget {
 	Widget build(BuildContext context) {
 		return MultiProvider(
 			providers: [
-				// 1. Repository (core dependency)
 				Provider<SpoonacularRepository>(
 					create: (_) => SpoonacularRepository(
 						apiKey: ApiConfig.spoonacularApiKey,
 					),
 				),
 
-				// 2. Services depending on the repository
 				ProxyProvider<SpoonacularRepository, IngredientService>(
 					update: (_, repo, __) => IngredientService(repo),
 				),
@@ -41,7 +39,6 @@ class MyApp extends StatelessWidget {
 					update: (_, repo, __) => UPCService(repo),
 				),
 
-				// 3. ViewModel (depends on 3 services)
 				ChangeNotifierProvider<IngredientVM>(
 					create: (context) => IngredientVM(
 						context.read<IngredientService>(),

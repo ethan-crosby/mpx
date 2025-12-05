@@ -12,36 +12,48 @@ class IngredientTileWidget extends StatelessWidget {
 		required this.ingredient,
 	});
 
+	@override
 	Widget build(BuildContext context) {
-		return SliverToBoxAdapter(
-			child: CupertinoContextMenu(
-				actions: [
-					CupertinoContextMenuAction(
-						onPressed: () => Navigator.pop(context),
-						child: const Text('Delete'),
-						isDestructiveAction: true,
-					),
-				],
-				child: CupertinoListTile(
-					title: Text(ingredient.name),
-					leading: const Icon(CupertinoIcons.star),
-					trailing: const Icon(CupertinoIcons.forward),
-					onTap: () {
-						showCupertinoDialog(
-							context: context,
-							builder: (_) => CupertinoAlertDialog(
-								title: Text('Tapped on item $index'),
-								actions: [
-									CupertinoDialogAction(
-										child: const Text('OK'),
-										onPressed: () => Navigator.pop(context),
+		return LayoutBuilder(
+			builder: (context, constraints) {
+				// constraints.maxWidth is the REAL width of the sliver item
+				return CupertinoContextMenu(
+					actions: [
+						CupertinoContextMenuAction(
+							onPressed: () => Navigator.pop(context),
+							child: const Text('Delete'),
+							isDestructiveAction: true,
+						),
+					],
+					child: ConstrainedBox(
+						constraints: BoxConstraints(
+							minWidth: constraints.maxWidth,
+							maxWidth: constraints.maxWidth,
+						),
+						child: CupertinoListTile(
+							title: Text(ingredient.name),
+							leading: const Icon(CupertinoIcons.star),
+							trailing: const Icon(CupertinoIcons.forward),
+							onTap: () {
+								/*
+								showCupertinoDialog(
+									context: context,
+									builder: (_) => CupertinoAlertDialog(
+										title: Text('Tapped on item $index'),
+										actions: [
+											CupertinoDialogAction(
+												child: const Text('OK'),
+												onPressed: () => Navigator.pop(context),
+											),
+										],
 									),
-								],
-							),
-						);
-					},
-				),
-			),
+								);
+								*/
+							},
+						),
+					),
+				);
+			},
 		);
 	}
 }
