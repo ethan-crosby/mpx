@@ -26,6 +26,12 @@ class _IngredientView extends State<IngredientView> {
 				slivers: [
 					const CupertinoSliverNavigationBar(
 						largeTitle: Text('Ingredients'),
+						trailing: CupertinoButton(
+							padding: EdgeInsets.zero,
+							onPressed: () {
+							},
+							child: const Icon(CupertinoIcons.add),
+						),
 					),
 
 					SliverSafeArea(
