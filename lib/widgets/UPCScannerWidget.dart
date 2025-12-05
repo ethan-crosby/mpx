@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
-/// Implementation of Mobile Scanner example with simple configuration
+import '../config/api_config.dart';
+import '../repositories/spoonacular_repository.dart';
+import '../services/upc_service.dart';
+
 class UPCSannerWidget extends StatefulWidget {
-	/// Constructor for simple Mobile Scanner example
 	UPCSannerWidget({super.key});
 
 	@override
@@ -14,16 +16,35 @@ class _UPCSannerWidgetState extends State<UPCSannerWidget> {
 	Barcode? _barcode;
 	bool _hasPopped = false;
 
-	void _handleBarcode(BarcodeCapture barcodes) {
+	late final SpoonacularRepository repository;
+	late final UPCService upcService;
+
+	@override
+	void initState() {
+		super.initState();
+		repository = SpoonacularRepository(apiKey: ApiConfig.spoonacularApiKey);
+		upcService = UPCService(repository);
+	}
+
+	Future<void> _handleBarcode(BarcodeCapture barcodes) async {
 		if (mounted && !_hasPopped) {
 			final barcode = barcodes.barcodes.firstOrNull;
 			if (barcode != null) {
+				_hasPopped = true;
+
 				setState(() {
 					_barcode = barcode;
 				});
 
-				_hasPopped = true; // prevent multiple pops
-				Navigator.pop(context, barcode.rawValue); // pass barcode back if needed
+				try {
+					final product = await upcService.getProductByUPC(barcode.rawValue ?? '');
+					print(product.title);
+
+					Navigator.pop(context, product);
+				} catch (e) {
+					print('Error: $e');
+					_hasPopped = false;
+				}
 			}
 		}
 	}
