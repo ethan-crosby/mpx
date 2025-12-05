@@ -24,11 +24,32 @@ class _IngredientView extends State<IngredientView> {
 		return CupertinoPageScaffold(
 			child: CustomScrollView(
 				slivers: [
-					const CupertinoSliverNavigationBar(
+					CupertinoSliverNavigationBar(
 						largeTitle: Text('Ingredients'),
 						trailing: CupertinoButton(
 							padding: EdgeInsets.zero,
 							onPressed: () {
+								showCupertinoModalPopup<void>(
+									context: context,
+									builder: (BuildContext context) => CupertinoActionSheet(
+										title: const Text('Add ingredient'),
+										actions: <CupertinoActionSheetAction>[
+											CupertinoActionSheetAction(
+												isDefaultAction: true,
+												onPressed: () {
+													Navigator.pop(context);
+												},
+												child: const Text('Search'),
+											),
+											CupertinoActionSheetAction(
+												onPressed: () {
+													Navigator.pop(context);
+												},
+												child: const Text('Scan UPC'),
+											),
+										],
+									),
+								);
 							},
 							child: const Icon(CupertinoIcons.add),
 						),
