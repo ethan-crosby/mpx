@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../viewModels/ingredientVM.dart';
 import '../viewModels/ingredientSearchVM.dart';
 import '../widgets/ingredientTileWidget.dart';
+import '../widgets/UPCScannerWidget.dart';
 import './ingredientSearchView.dart';
 import '../config/api_config.dart';
 import '../repositories/spoonacular_repository.dart';
@@ -73,6 +74,11 @@ class _IngredientView extends State<IngredientView> {
 											CupertinoActionSheetAction(
 												onPressed: () {
 													Navigator.pop(context);
+													Navigator.of(context).push(
+														CupertinoPageRoute(
+															builder: (_) => UPCSannerWidget(),
+														),
+													);
 												},
 												child: const Text('Scan UPC'),
 											),
