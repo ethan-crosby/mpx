@@ -2,7 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
 import '../viewModels/ingredientVM.dart';
+import '../viewModels/ingredientSearchVM.dart';
 import '../widgets/ingredientTileWidget.dart';
+import './ingredientSearchView.dart';
+import '../config/api_config.dart';
+import '../repositories/spoonacular_repository.dart';
+import '../services/ingredient_service.dart';
 
 class IngredientView extends StatefulWidget {
 	const IngredientView({
@@ -38,6 +43,30 @@ class _IngredientView extends State<IngredientView> {
 												isDefaultAction: true,
 												onPressed: () {
 													Navigator.pop(context);
+													Navigator.of(context).push(
+														CupertinoPageRoute(
+															builder: (_) => MultiProvider(
+																providers: [
+																	Provider<SpoonacularRepository>(
+																		create: (_) => SpoonacularRepository(
+																			apiKey: ApiConfig.spoonacularApiKey,
+																		),
+																	),
+
+																	ProxyProvider<SpoonacularRepository, IngredientService>(
+																		update: (_, repo, __) => IngredientService(repo),
+																	),
+
+																	ChangeNotifierProvider<IngredientSearchVM>(
+																		create: (context) => IngredientSearchVM(
+																			context.read<IngredientService>(),
+																		),
+																	),
+																],
+																child: IngredientSearchView(),
+															),
+														),
+													);
 												},
 												child: const Text('Search'),
 											),

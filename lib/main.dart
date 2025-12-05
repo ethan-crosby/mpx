@@ -32,12 +32,6 @@ class MyApp extends StatelessWidget {
 				ProxyProvider<SpoonacularRepository, IngredientService>(
 					update: (_, repo, __) => IngredientService(repo),
 				),
-				ProxyProvider<SpoonacularRepository, RecipeService>(
-					update: (_, repo, __) => RecipeService(repo),
-				),
-				ProxyProvider<SpoonacularRepository, UPCService>(
-					update: (_, repo, __) => UPCService(repo),
-				),
 
 				ChangeNotifierProvider<IngredientVM>(
 					create: (context) => IngredientVM(
