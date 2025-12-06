@@ -17,6 +17,7 @@ class UPCSannerWidget extends StatefulWidget {
 class _UPCSannerWidgetState extends State<UPCSannerWidget> {
 	Barcode? _barcode;
 	bool _hasPopped = false;
+	bool _working = false;
 
 	late final SpoonacularRepository repository;
 	late final UPCService upcService;
@@ -31,49 +32,53 @@ class _UPCSannerWidgetState extends State<UPCSannerWidget> {
 	}
 
 	Future<void> _handleBarcode(BarcodeCapture barcodes) async {
-		if (mounted && !_hasPopped) {
-			final barcode = barcodes.barcodes.firstOrNull;
-			if (barcode != null) {
-				_hasPopped = true;
+		if (!_working) {
+			_working = true;
+			if (mounted && !_hasPopped) {
+				final barcode = barcodes.barcodes.firstOrNull;
+				if (barcode != null) {
+					_hasPopped = true;
 
-				setState(() {
-					_barcode = barcode;
-				});
+					setState(() {
+						_barcode = barcode;
+					});
 
-				try {
-					final product = await upcService.getProductByUPC(barcode.rawValue ?? '');
+					try {
+						final product = await upcService.getProductByUPC(barcode.rawValue ?? '');
 
-					final Ingredient finalIngredient = await classifyService.classify(
-						title: product.title,
-					);
+						final Ingredient finalIngredient = await classifyService.classify(
+							title: product.title,
+						);
 
-					Navigator.pop(context, finalIngredient);
-					/*
-					showCupertinoDialog(
-						context: context,
-						builder: (BuildContext context) {
-							return CupertinoAlertDialog(
-								title: Text('Error'),
-								content: Text('Not an ingredient'),
-								actions: [
-									CupertinoDialogAction(
-										isDefaultAction: true,
-										child: Text('OK'),
-										onPressed: () {
-											Navigator.of(context).pop();
-											_hasPopped = false;
-										},
-									),
-								],
-							);
-						},
-					);
-					*/
-				} catch (e) {
-					print('Error: $e');
-					_hasPopped = false;
+						Navigator.pop(context, finalIngredient);
+						/*
+						showCupertinoDialog(
+							context: context,
+							builder: (BuildContext context) {
+								return CupertinoAlertDialog(
+									title: Text('Error'),
+									content: Text('Not an ingredient'),
+									actions: [
+										CupertinoDialogAction(
+											isDefaultAction: true,
+											child: Text('OK'),
+											onPressed: () {
+												Navigator.of(context).pop();
+												_hasPopped = false;
+											},
+										),
+									],
+								);
+							},
+						);
+						*/
+					} catch (e) {
+						print('Error: $e');
+						_hasPopped = false;
+					}
 				}
 			}
+			_working = false;
 		}
 	}
 
