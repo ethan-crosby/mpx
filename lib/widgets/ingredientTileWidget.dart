@@ -55,6 +55,7 @@ class IngredientTileWidget extends StatelessWidget {
 													ChangeNotifierProvider<IngredientDetailVM>(
 														create: (context) => IngredientDetailVM(
 															context.read<NutritionService>(),
+															ingredient,
 														),
 													),
 												],

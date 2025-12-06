@@ -1,4 +1,5 @@
 import '../models/nutrient.dart';
+import '../models/ingredient.dart';
 import '../repositories/spoonacular_repository.dart';
 
 class NutritionService {
@@ -7,10 +8,13 @@ class NutritionService {
 	NutritionService(this.repository);
 
 	Future<List<Nutrient>> getNutritionFacts({
-		required int id,
+		required Ingredient ingredient,
 	}) async {
 		try {
-			final result = await repository.getIngredientInformation(id);
+			final result = await repository.getIngredientInformation(
+				id: ingredient.id,
+				amount: (ingredient.amount ?? 1).toInt(),
+			);
 
 			final map = result as Map<String, dynamic>;
 

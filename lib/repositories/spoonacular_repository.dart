@@ -167,8 +167,16 @@ class SpoonacularRepository {
 		);
 	}
 
-	Future<Map<String, dynamic>> getIngredientInformation(int id) async {
-		return await _get('/food/ingredients/$id/information');
+	Future<Map<String, dynamic>> getIngredientInformation({
+		required int id,
+		required int amount,
+	}) async {
+		return await _get(
+			'/food/ingredients/$id/information',
+			queryParameters: {
+				'amount': amount.toString(),
+			},
+		);
 	}
 
 	Future<Map<String, dynamic>> getRecipeInformation(int recipeId) async {
