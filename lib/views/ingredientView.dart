@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../viewModels/ingredientVM.dart';
 import '../viewModels/ingredientSearchVM.dart';
@@ -36,6 +37,11 @@ class _IngredientView extends State<IngredientView> {
 					CustomScrollView(
 						slivers: [
 							CupertinoSliverNavigationBar(
+								leading: SvgPicture.asset(
+									'assets/logo.svg',
+									color: CupertinoColors.label.resolveFrom(context),
+									height: 22,
+								),
 								largeTitle: Text('Ingredients'),
 								trailing: CupertinoButton(
 									padding: EdgeInsets.zero,
