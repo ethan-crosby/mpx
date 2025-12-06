@@ -29,4 +29,16 @@ class IngredientDetailVM extends ChangeNotifier {
 		_loading = false;
 		notifyListeners();
 	}
+
+	void refresh() async {
+		_loading = true;
+		notifyListeners();
+		
+		_nutrients = await _service.getNutritionFacts(
+			ingredient: _ingredient,
+		);
+
+		_loading = false;
+		notifyListeners();
+	}
 }

@@ -13,7 +13,8 @@ class NutritionService {
 		try {
 			final result = await repository.getIngredientInformation(
 				id: ingredient.id,
-				amount: (ingredient.amount ?? 1).toInt(),
+				amount: (ingredient.amount ?? 0.0).toDouble(),
+				unit: (ingredient.unit ?? 'g').toString(),
 			);
 
 			final map = result as Map<String, dynamic>;

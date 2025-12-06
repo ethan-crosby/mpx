@@ -43,6 +43,16 @@ class IngredientTileWidget extends StatelessWidget {
 						child: Container(
 							child: CupertinoListTile(
 								title: Text(ingredient.name),
+								subtitle: Row(
+									children: [
+										Text(
+											(ingredient.amount ?? '0.0').toString(),
+										),
+										Text(
+											' ${ingredient.unit ?? 'g'}',
+										),
+									],
+								),
 								trailing: const Icon(CupertinoIcons.forward),
 								onTap: () {
 									Navigator.of(context).push(

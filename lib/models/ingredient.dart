@@ -2,8 +2,8 @@ class Ingredient {
 	final int id;
 	final String name;
 	final String? image;
-	final double? amount;
-	final String? unit;
+	double? amount;
+	String? unit;
 	final String? original;
 
 	Ingredient({
@@ -13,6 +13,7 @@ class Ingredient {
 		this.amount,
 		this.unit,
 		this.original,
+		this.possibleUnits,
 	});
 
 	factory Ingredient.fromJson(Map<String, dynamic> json) {
@@ -23,6 +24,10 @@ class Ingredient {
 			amount: json['amount'] != null ? (json['amount'] as num).toDouble() : null,
 			unit: json['unit'] as String?,
 			original: json['original'] as String?,
+			possibleUnits: json['possibleUnits'] != null
+				? List<String>.from(json['possibleUnits'])
+				: null,
+
 		);
 	}
 
@@ -34,6 +39,7 @@ class Ingredient {
 			'amount': amount,
 			'unit': unit,
 			'original': original,
+			'possibleUnits': possibleUnits,
 		};
 	}
 }

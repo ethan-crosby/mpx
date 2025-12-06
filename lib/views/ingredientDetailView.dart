@@ -5,14 +5,25 @@ import '../viewModels/ingredientDetailVM.dart';
 import '../widgets/ingredientSearchTileWidget.dart';
 import '../models/ingredient.dart';
 import '../models/nutrient.dart';
+import '../views/amountView.dart';
 
-class IngredientDetailView extends StatelessWidget {
+class IngredientDetailView extends StatefulWidget {
 	final Ingredient ingredient;
 
-	const IngredientDetailView({
-		super.key,
-		required this.ingredient,
-	});
+	const IngredientDetailView({super.key, required this.ingredient});
+
+	@override
+	_IngredientDetailViewState createState() => _IngredientDetailViewState();
+}
+
+class _IngredientDetailViewState extends State<IngredientDetailView> {
+	late Ingredient ingredient;
+
+	@override
+	void initState() {
+		super.initState();
+		ingredient = widget.ingredient;
+	}
 
 	@override
 	Widget build(BuildContext context) {
@@ -21,6 +32,29 @@ class IngredientDetailView extends StatelessWidget {
 		return CupertinoPageScaffold(
 			navigationBar: CupertinoNavigationBar(
 				middle: Text(ingredient.name),
+				trailing: CupertinoButton(
+					onPressed: () async {
+						final double? amount = ingredient.amount;
+						final String? unit = ingredient.unit;
+
+						await Navigator.of(context).push<Ingredient>(
+							CupertinoPageRoute(
+								builder: (_) => AmountView(
+									ingredient: ingredient,
+								),
+							),
+						);
+
+						if (
+							ingredient.amount != amount ||
+							ingredient.unit != unit
+						) {
+							vm.refresh();
+						}
+					},
+					padding: EdgeInsets.zero,
+					child: Text('Edit'),
+				),
 			),
 			child: SafeArea(
 				child: Padding(
@@ -32,12 +66,9 @@ class IngredientDetailView extends StatelessWidget {
 							borderRadius: BorderRadius.circular(8),
 						),
 						width: double.infinity,
-						child: vm.loading ?
-							Container(
-								alignment: Alignment.center,
-								child: CupertinoActivityIndicator(),
-							) :
-							ListView(
+						child: vm.loading
+							? Center(child: CupertinoActivityIndicator())
+							: ListView(
 								children: [
 									Text(
 										'Nutrition Facts',
@@ -45,6 +76,16 @@ class IngredientDetailView extends StatelessWidget {
 											fontSize: 28,
 											fontWeight: FontWeight.bold,
 										),
+									),
+									SizedBox(height: 5),
+									Row(
+										mainAxisAlignment: MainAxisAlignment.spaceBetween,
+										children: [
+											Text('Amount'),
+											Text(
+												'${ingredient.amount ?? 0.0} ${ingredient.unit ?? 'g'}',
+											),
+										],
 									),
 									Container(
 										color: CupertinoColors.label.resolveFrom(context),
@@ -55,10 +96,10 @@ class IngredientDetailView extends StatelessWidget {
 										padding: EdgeInsets.symmetric(vertical: 3.0),
 										child: Container(
 											width: double.infinity,
-											child:Text(
+											child: Text(
 												'% Daily Value',
 												textAlign: TextAlign.right,
-											)
+											),
 										),
 									),
 									Container(
@@ -66,25 +107,16 @@ class IngredientDetailView extends StatelessWidget {
 										width: double.infinity,
 										height: 1,
 									),
-									...List.generate(
-										vm.nutrients.length,
-										(index) => NutitionItem(
-											context: context,
-											nutrient: vm.nutrients[index],
-										),
-									),
+									...vm.nutrients.map((nutrient) => nutritionItem(nutrient)),
 								],
-							)
+							),
 					),
 				),
 			),
 		);
 	}
 
-	Widget NutitionItem({
-		required BuildContext context,
-		required Nutrient nutrient
-	}) {
+	Widget nutritionItem(Nutrient nutrient) {
 		return Column(
 			children: [
 				Padding(
@@ -96,24 +128,16 @@ class IngredientDetailView extends StatelessWidget {
 								children: [
 									Text(
 										nutrient.name,
-										style: TextStyle(
-											fontWeight: FontWeight.bold,
-										),
+										style: TextStyle(fontWeight: FontWeight.bold),
 									),
-									Text(
-										' ${nutrient.amount.toString()}',
-									),
-									Text(
-										nutrient.unit
-									),
+									Text(' ${nutrient.amount}'),
+									Text(nutrient.unit),
 								],
 							),
 							Text(
 								'${nutrient.percentOfDailyNeeds}%',
-								style: TextStyle(
-									fontWeight: FontWeight.bold,
-								)
-							)
+								style: TextStyle(fontWeight: FontWeight.bold),
+							),
 						],
 					),
 				),
@@ -121,7 +145,7 @@ class IngredientDetailView extends StatelessWidget {
 					color: CupertinoColors.label.resolveFrom(context),
 					width: double.infinity,
 					height: 1,
-				)
+				),
 			],
 		);
 	}

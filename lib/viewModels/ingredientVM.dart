@@ -25,4 +25,8 @@ class IngredientVM extends ChangeNotifier {
 		_ingredients.remove(ingredient);
 		notifyListeners();
 	}
+
+	void changeAmount() {
+		notifyListeners();
+	}
 }

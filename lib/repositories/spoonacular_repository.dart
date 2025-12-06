@@ -169,12 +169,14 @@ class SpoonacularRepository {
 
 	Future<Map<String, dynamic>> getIngredientInformation({
 		required int id,
-		required int amount,
+		required double amount,
+		required String unit,
 	}) async {
 		return await _get(
 			'/food/ingredients/$id/information',
 			queryParameters: {
 				'amount': amount.toString(),
+				'unit': unit,
 			},
 		);
 	}

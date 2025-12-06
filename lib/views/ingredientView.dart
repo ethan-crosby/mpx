@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
+import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
 
 import '../viewModels/ingredientVM.dart';
 import '../viewModels/ingredientSearchVM.dart';
@@ -9,6 +10,8 @@ import './ingredientSearchView.dart';
 import '../config/api_config.dart';
 import '../repositories/spoonacular_repository.dart';
 import '../services/ingredient_service.dart';
+import '../views/amountView.dart';
+import '../models/ingredient.dart';
 
 class IngredientView extends StatefulWidget {
 	const IngredientView({
@@ -28,84 +31,123 @@ class _IngredientView extends State<IngredientView> {
 	@override
 	Widget build(BuildContext context) {
 		return CupertinoPageScaffold(
-			child: CustomScrollView(
-				slivers: [
-					CupertinoSliverNavigationBar(
-						largeTitle: Text('Ingredients'),
-						trailing: CupertinoButton(
-							padding: EdgeInsets.zero,
-							onPressed: () {
-								showCupertinoModalPopup<void>(
-									context: context,
-									builder: (BuildContext context) => CupertinoActionSheet(
-										title: const Text('Add ingredient'),
-										actions: <CupertinoActionSheetAction>[
-											CupertinoActionSheetAction(
-												isDefaultAction: true,
-												onPressed: () async {
-													final vm = context.read<IngredientVM>();
+			child: Stack(
+				children: [
+					CustomScrollView(
+						slivers: [
+							CupertinoSliverNavigationBar(
+								largeTitle: Text('Ingredients'),
+								trailing: CupertinoButton(
+									padding: EdgeInsets.zero,
+									onPressed: () {
+										showCupertinoModalPopup<void>(
+											context: context,
+											builder: (BuildContext context) => CupertinoActionSheet(
+												title: const Text('Add ingredient'),
+												actions: <CupertinoActionSheetAction>[
+													CupertinoActionSheetAction(
+														isDefaultAction: true,
+														onPressed: () async {
+															final vm = context.read<IngredientVM>();
+															final navigator = Navigator.of(context);
 
-													Navigator.pop(context);
+															navigator.pop(context);
 
-													final ingredient = await Navigator.of(context).push(
-														CupertinoPageRoute(
-															builder: (_) => MultiProvider(
-																providers: [
-																	ChangeNotifierProvider<IngredientSearchVM>(
-																		create: (context) => IngredientSearchVM(
-																			context.read<IngredientService>(),
+															final Ingredient? ingredient = await navigator.push(
+																CupertinoPageRoute(
+																	builder: (_) => MultiProvider(
+																		providers: [
+																			ChangeNotifierProvider<IngredientSearchVM>(
+																				create: (context) => IngredientSearchVM(
+																					context.read<IngredientService>(),
+																				),
+																			),
+																		],
+																		child: IngredientSearchView(),
+																	),
+																),
+															);
+
+															if (ingredient != null) {
+																await navigator.push(
+																	CupertinoPageRoute(
+																		builder: (_) => AmountView(
+																			ingredient: ingredient,
 																		),
 																	),
-																],
-																child: IngredientSearchView(),
-															),
-														),
-													);
+																);
 
-													vm.addIngredient(ingredient);
-												},
-												child: const Text('Search'),
+																
+																vm.addIngredient(ingredient);
+															}
+														},
+														child: const Text('Search'),
+													),
+													CupertinoActionSheetAction(
+														onPressed: () async {
+															final vm = context.read<IngredientVM>();
+
+															Navigator.pop(context);
+
+															final ingredient = await Navigator.of(context).push(
+																CupertinoPageRoute(
+																	builder: (_) => UPCSannerWidget(),
+																),
+															);
+
+															vm.addIngredient(ingredient);
+														},
+														child: const Text('Scan UPC'),
+													),
+												],
 											),
-											CupertinoActionSheetAction(
-												onPressed: () async {
-													final vm = context.read<IngredientVM>();
-
-													Navigator.pop(context);
-
-													final ingredient = await Navigator.of(context).push(
-														CupertinoPageRoute(
-															builder: (_) => UPCSannerWidget(),
-														),
-													);
-
-													vm.addIngredient(ingredient);
-												},
-												child: const Text('Scan UPC'),
-											),
-										],
-									),
-								);
-							},
-							child: const Icon(CupertinoIcons.add),
-						),
-					),
-
-					SliverSafeArea(
-						top: false,
-						sliver: SliverList(
-							delegate: SliverChildBuilderDelegate(
-								(context, index) {
-									final vm = context.watch<IngredientVM>();
-									final ingredient = vm.ingredients[index];
-
-									return IngredientTileWidget(
-										index: index,
-										ingredient: ingredient,
-									);
-								},
-								childCount: context.watch<IngredientVM>().ingredients.length,
+										);
+									},
+									child: const Icon(CupertinoIcons.add),
+								),
 							),
-						),
+
+							SliverSafeArea(
+								top: false,
+								sliver: SliverList(
+									delegate: SliverChildBuilderDelegate(
+										(context, index) {
+											final vm = context.watch<IngredientVM>();
+											final ingredient = vm.ingredients[index];
+
+											return IngredientTileWidget(
+												index: index,
+												ingredient: ingredient,
+											);
+										},
+										childCount: context.watch<IngredientVM>().ingredients.length,
+									),
+								),
+							),
+						],
+					),
+					Positioned(
+						bottom: 30,
+						right: 30,
+						child: LiquidGlassLayer(
+              settings: const LiquidGlassSettings(
+                thickness: 20,
+                blur: 10,
+                glassColor: Color(0x33FFFFFF),
+              ),
+              child: LiquidGlass(
+                shape: LiquidRoundedSuperellipse(
+                  borderRadius: 50,
+                ),
+                child: const SizedBox(
+                  height: 200,
+                  width: 200,
+                  child: Center(
+                    child: FlutterLogo(size: 100),
+                  ),
+                ),
+              ),
+            ),
 					),
 				],
 			),

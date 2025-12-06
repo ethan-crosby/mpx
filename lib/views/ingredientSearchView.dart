@@ -52,7 +52,7 @@ class _IngredientSearchView extends State<IngredientSearchView> {
 								padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
 								child: CupertinoSearchTextField(
 									controller: _controller,
-									focusNode: _searchFocusNode, // <-- attach focus node
+									focusNode: _searchFocusNode,
 									onChanged: (value) {
 										vm.search(value);
 									},
