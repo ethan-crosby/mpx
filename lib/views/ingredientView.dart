@@ -77,8 +77,9 @@ class _IngredientView extends State<IngredientView> {
 																	),
 																);
 
-																
-																vm.addIngredient(ingredient);
+																if(ingredient.amount != null) {																
+																	vm.addIngredient(ingredient);
+																}
 															}
 														},
 														child: const Text('Search'),
@@ -97,7 +98,7 @@ class _IngredientView extends State<IngredientView> {
 
 															vm.addIngredient(ingredient);
 														},
-														child: const Text('Scan UPC'),
+														child: const Text('Scan Barcode'),
 													),
 												],
 											),
@@ -130,24 +131,26 @@ class _IngredientView extends State<IngredientView> {
 						bottom: 30,
 						right: 30,
 						child: LiquidGlassLayer(
-              settings: const LiquidGlassSettings(
-                thickness: 20,
-                blur: 10,
-                glassColor: Color(0x33FFFFFF),
-              ),
-              child: LiquidGlass(
-                shape: LiquidRoundedSuperellipse(
-                  borderRadius: 50,
-                ),
-                child: const SizedBox(
-                  height: 200,
-                  width: 200,
-                  child: Center(
-                    child: FlutterLogo(size: 100),
-                  ),
-                ),
-              ),
-            ),
+							settings: LiquidGlassSettings(
+								thickness: 20,
+								saturation: 1.5,
+								glassColor: CupertinoColors.inactiveGray.resolveFrom(context),
+								ambientStrength: 1.5,
+							),
+							child: LiquidGlass(
+								shape: LiquidRoundedSuperellipse(
+									borderRadius: 50,
+								),
+								child: Container(
+									child: Center(
+										child: Padding(
+											padding: EdgeInsets.all(16),
+											child: Text('Search Recipes'),
+										),
+									),
+								),
+							),
+						),
 					),
 				],
 			),

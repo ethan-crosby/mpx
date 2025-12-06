@@ -78,7 +78,7 @@ class IngredientTileWidget extends StatelessWidget {
 								},
 							),
 							color: isEven ?
-								CupertinoColors.systemGrey5.resolveFrom(context) :
+								CupertinoColors.systemBackground.resolveFrom(context) :
 								CupertinoColors.systemGrey6.resolveFrom(context),
 						),
 					),

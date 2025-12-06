@@ -27,6 +27,7 @@ class _UPCSannerWidgetState extends State<UPCSannerWidget> {
 		super.initState();
 		repository = SpoonacularRepository(apiKey: ApiConfig.spoonacularApiKey);
 		upcService = UPCService(repository);
+		classifyService = ClassifyService(repository);
 	}
 
 	Future<void> _handleBarcode(BarcodeCapture barcodes) async {
@@ -80,7 +81,7 @@ class _UPCSannerWidgetState extends State<UPCSannerWidget> {
 	Widget build(BuildContext context) {
 		return CupertinoPageScaffold(
 			navigationBar: CupertinoNavigationBar(
-				middle: Text('UPC Scanner'),
+				middle: Text('Barcode Scanner'),
 			),
 			child: MobileScanner(onDetect: _handleBarcode),
 		);
