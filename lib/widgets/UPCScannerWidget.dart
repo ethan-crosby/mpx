@@ -4,6 +4,7 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import '../config/api_config.dart';
 import '../repositories/spoonacular_repository.dart';
 import '../services/upc_service.dart';
+import '../models/ingredient.dart';
 
 class UPCSannerWidget extends StatefulWidget {
 	UPCSannerWidget({super.key});
@@ -38,9 +39,32 @@ class _UPCSannerWidgetState extends State<UPCSannerWidget> {
 
 				try {
 					final product = await upcService.getProductByUPC(barcode.rawValue ?? '');
-					print(product.breadcrumbs);
+					String? ingredient = product.breadcrumbs?[0];
 
-					Navigator.pop(context, product);
+					if(ingredient != null && ingredient != 'non food item') {
+						print(ingredient);
+						Navigator.pop(context, product);
+					} else {
+						showCupertinoDialog(
+							context: context,
+							builder: (BuildContext context) {
+								return CupertinoAlertDialog(
+									title: Text('Error'),
+									content: Text('Not an ingredient'),
+									actions: [
+										CupertinoDialogAction(
+											isDefaultAction: true,
+											child: Text('OK'),
+											onPressed: () {
+												Navigator.of(context).pop();
+												_hasPopped = false;
+											},
+										),
+									],
+								);
+							},
+						);
+					}
 				} catch (e) {
 					print('Error: $e');
 					_hasPopped = false;

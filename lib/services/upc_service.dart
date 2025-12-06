@@ -28,10 +28,10 @@ class UPCService {
 
 			// Breadcrumbs can be String or List
 			final breadcrumbs = data['breadcrumbs'] != null
-				? (data['breadcrumbs'] is String
-					? data['breadcrumbs'] as String
-					: (data['breadcrumbs'] as List).join(', '))
-				: null;
+					? (data['breadcrumbs'] is List
+							? (data['breadcrumbs'] as List).map((e) => e.toString()).toList()
+							: [data['breadcrumbs'].toString()])
+					: <String>[];
 
 			final brand = data['brand'] as String?;
 			final upcValue = data['upc'] as String? ?? upc;
