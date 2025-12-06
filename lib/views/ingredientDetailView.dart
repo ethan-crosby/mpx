@@ -129,14 +129,26 @@ class _IngredientDetailViewState extends State<IngredientDetailView> {
 									Text(
 										nutrient.name,
 										style: TextStyle(fontWeight: FontWeight.bold),
+										overflow: TextOverflow.ellipsis,
+										maxLines: 1,
 									),
-									Text(' ${nutrient.amount}'),
-									Text(nutrient.unit),
+									Text(
+										' ${nutrient.amount}',
+										overflow: TextOverflow.ellipsis,
+										maxLines: 1,
+									),
+									Text(
+										nutrient.unit,
+										overflow: TextOverflow.ellipsis,
+										maxLines: 1,
+									),
 								],
 							),
 							Text(
 								'${nutrient.percentOfDailyNeeds}%',
 								style: TextStyle(fontWeight: FontWeight.bold),
+								overflow: TextOverflow.ellipsis,
+								maxLines: 1,
 							),
 						],
 					),

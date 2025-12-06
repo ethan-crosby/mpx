@@ -15,7 +15,6 @@
 ## TODO
 * Fix the bardcode lookup system
 * Write readme
-* Add loading states for search
 * Add recipe search
 * Testing
 * Add launch screen
