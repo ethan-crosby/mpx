@@ -5,6 +5,7 @@ class Ingredient {
 	double? amount;
 	String? unit;
 	final String? original;
+	final List<String>? possibleUnits;
 
 	Ingredient({
 		required this.id,
