@@ -77,6 +77,42 @@ class SpoonacularRepository {
 		}
 	}
 
+	Future<Map<String, dynamic>> _post(
+		String endpoint, {
+		Map<String, String>? queryParameters,
+	}) async {
+		final uri = Uri.parse('$baseUrl$endpoint').replace(
+			queryParameters: {
+				'apiKey': apiKey,
+			},
+		);
+
+		try {
+			final response = await client.post(
+				uri,
+				headers: {'Content-Type': 'application/json'},
+				body: jsonEncode(queryParameters ?? {}),
+			);
+
+			if (response.statusCode == 200) {
+				return json.decode(response.body) as Map<String, dynamic>;
+			} else if (response.statusCode == 401) {
+				throw Exception('Invalid API key - Status: ${response.statusCode}, Body: ${response.body}');
+			} else if (response.statusCode == 402) {
+				throw Exception('API quota exceeded - Status: ${response.statusCode}, Body: ${response.body}');
+			} else if (response.statusCode == 404) {
+				throw Exception('Resource not found - Status: ${response.statusCode}, Body: ${response.body}');
+			} else {
+				throw Exception(
+					'Failed to load data: ${response.statusCode} - ${response.body}',
+				);
+			}
+		} catch (e) {
+			if (e is Exception) rethrow;
+			throw Exception('Network error: $e');
+		}
+	}
+
 	Future<Map<String, dynamic>> getProductByUPC(String upc) async {
 		return await _get('/food/products/upc/$upc');
 	}
@@ -91,6 +127,22 @@ class SpoonacularRepository {
 				'query': query,
 				'number': number.toString(),
 				'metaInformation': 'true',
+			},
+		);
+		if (data.isNotEmpty) {
+			return data as List<dynamic>;
+		} else {
+			return [];
+		}
+	}
+
+	Future<List<dynamic>> classifyProduct({
+		required String title,
+	}) async {
+		final data = await _post(
+			'/food/products/classify',
+			queryParameters: {
+				'title': title,
 			},
 		);
 		if (data.isNotEmpty) {

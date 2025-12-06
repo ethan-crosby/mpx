@@ -4,6 +4,7 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import '../config/api_config.dart';
 import '../repositories/spoonacular_repository.dart';
 import '../services/upc_service.dart';
+import '../services/classify_service.dart';
 import '../models/ingredient.dart';
 
 class UPCSannerWidget extends StatefulWidget {
@@ -19,6 +20,7 @@ class _UPCSannerWidgetState extends State<UPCSannerWidget> {
 
 	late final SpoonacularRepository repository;
 	late final UPCService upcService;
+	late final ClassifyService classifyService;
 
 	@override
 	void initState() {
