@@ -72,13 +72,15 @@ class _IngredientView extends State<IngredientView> {
 												child: const Text('Search'),
 											),
 											CupertinoActionSheetAction(
-												onPressed: () {
+												onPressed: () async {
 													Navigator.pop(context);
-													Navigator.of(context).push(
+													final ingredient = await Navigator.of(context).push(
 														CupertinoPageRoute(
 															builder: (_) => UPCSannerWidget(),
 														),
 													);
+
+													print(ingredient.name);
 												},
 												child: const Text('Scan UPC'),
 											),

@@ -42,8 +42,12 @@ class _UPCSannerWidgetState extends State<UPCSannerWidget> {
 					String? ingredient = product.breadcrumbs?[0];
 
 					if(ingredient != null && ingredient != 'non food item') {
-						print(ingredient);
-						Navigator.pop(context, product);
+						final Ingredient finalIngredient = Ingredient(
+							id: product.id,
+							name: ingredient,
+						);
+
+						Navigator.pop(context, finalIngredient);
 					} else {
 						showCupertinoDialog(
 							context: context,
