@@ -13,11 +13,16 @@ class IngredientVM extends ChangeNotifier {
 		// init();
 	}
 
-	List<Ingredient> _ingredients = [
-		Ingredient(
-			id: 1,
-			name: 'Flour',
-		)
-	];
+	List<Ingredient> _ingredients = [];
 	List<Ingredient> get ingredients => _ingredients;
+
+	void addIngredient(Ingredient ingredient) {
+		_ingredients.add(ingredient);
+		notifyListeners();
+	}
+
+	void removeIngredient(Ingredient ingredient) {
+		_ingredients.remove(ingredient);
+		notifyListeners();
+	}
 }

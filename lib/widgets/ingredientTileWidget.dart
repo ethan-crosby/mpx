@@ -16,11 +16,14 @@ class IngredientTileWidget extends StatelessWidget {
 	Widget build(BuildContext context) {
 		return LayoutBuilder(
 			builder: (context, constraints) {
-				// constraints.maxWidth is the REAL width of the sliver item
 				return CupertinoContextMenu(
 					actions: [
 						CupertinoContextMenuAction(
-							onPressed: () => Navigator.pop(context),
+							onPressed: () {
+								Navigator.pop(context);
+
+								context.read<IngredientVM>().removeIngredient(ingredient);
+							},
 							child: const Text('Delete'),
 							isDestructiveAction: true,
 						),

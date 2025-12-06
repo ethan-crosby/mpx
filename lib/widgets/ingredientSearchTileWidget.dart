@@ -17,6 +17,8 @@ class IngredientSearchTileWidget extends StatelessWidget {
 		return CupertinoListTile(
 			title: Text(ingredient.name),
 			onTap: () {
+				Navigator.pop(context, ingredient);
+
 				/*
 				showCupertinoDialog(
 					context: context,

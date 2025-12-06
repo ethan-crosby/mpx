@@ -42,9 +42,9 @@ class _IngredientView extends State<IngredientView> {
 										actions: <CupertinoActionSheetAction>[
 											CupertinoActionSheetAction(
 												isDefaultAction: true,
-												onPressed: () {
+												onPressed: () async {
 													Navigator.pop(context);
-													Navigator.of(context).push(
+													final ingredient = await Navigator.of(context).push(
 														CupertinoPageRoute(
 															builder: (_) => MultiProvider(
 																providers: [
@@ -68,6 +68,8 @@ class _IngredientView extends State<IngredientView> {
 															),
 														),
 													);
+
+													context.read<IngredientVM>().addIngredient(ingredient);
 												},
 												child: const Text('Search'),
 											),
@@ -80,7 +82,7 @@ class _IngredientView extends State<IngredientView> {
 														),
 													);
 
-													print(ingredient.name);
+													context.read<IngredientVM>().addIngredient(ingredient);
 												},
 												child: const Text('Scan UPC'),
 											),
