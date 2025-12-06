@@ -43,33 +43,34 @@ class _IngredientView extends State<IngredientView> {
 											CupertinoActionSheetAction(
 												isDefaultAction: true,
 												onPressed: () async {
-													Navigator.pop(context);
-													final ingredient = await Navigator.of(context).push(
-														CupertinoPageRoute(
-															builder: (_) => MultiProvider(
-																providers: [
-																	Provider<SpoonacularRepository>(
-																		create: (_) => SpoonacularRepository(
-																			apiKey: ApiConfig.spoonacularApiKey,
-																		),
-																	),
+												  final vm = context.read<IngredientVM>();
 
-																	ProxyProvider<SpoonacularRepository, IngredientService>(
-																		update: (_, repo, __) => IngredientService(repo),
-																	),
+												  Navigator.pop(context);
 
-																	ChangeNotifierProvider<IngredientSearchVM>(
-																		create: (context) => IngredientSearchVM(
-																			context.read<IngredientService>(),
-																		),
-																	),
-																],
-																child: IngredientSearchView(),
-															),
-														),
-													);
+												  final ingredient = await Navigator.of(context).push(
+												    CupertinoPageRoute(
+												      builder: (_) => MultiProvider(
+												        providers: [
+												          Provider<SpoonacularRepository>(
+												            create: (_) => SpoonacularRepository(
+												              apiKey: ApiConfig.spoonacularApiKey,
+												            ),
+												          ),
+												          ProxyProvider<SpoonacularRepository, IngredientService>(
+												            update: (_, repo, __) => IngredientService(repo),
+												          ),
+												          ChangeNotifierProvider<IngredientSearchVM>(
+												            create: (context) => IngredientSearchVM(
+												              context.read<IngredientService>(),
+												            ),
+												          ),
+												        ],
+												        child: IngredientSearchView(),
+												      ),
+												    ),
+												  );
 
-													context.read<IngredientVM>().addIngredient(ingredient);
+												  vm.addIngredient(ingredient);
 												},
 												child: const Text('Search'),
 											),
