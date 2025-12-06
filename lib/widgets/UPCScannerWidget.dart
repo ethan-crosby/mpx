@@ -38,7 +38,7 @@ class _UPCSannerWidgetState extends State<UPCSannerWidget> {
 
 				try {
 					final product = await upcService.getProductByUPC(barcode.rawValue ?? '');
-					print(product.title);
+					print(product.breadcrumbs);
 
 					Navigator.pop(context, product);
 				} catch (e) {
