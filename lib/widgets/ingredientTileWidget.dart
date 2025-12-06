@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 
 import '../models/ingredient.dart';
+import '../viewModels/ingredientVM.dart';
 
 class IngredientTileWidget extends StatelessWidget {
 	final int index;
@@ -20,9 +22,8 @@ class IngredientTileWidget extends StatelessWidget {
 					actions: [
 						CupertinoContextMenuAction(
 							onPressed: () {
-								Navigator.pop(context);
-
 								context.read<IngredientVM>().removeIngredient(ingredient);
+								Navigator.pop(context);
 							},
 							child: const Text('Delete'),
 							isDestructiveAction: true,

@@ -14,7 +14,7 @@ class ClassifyService {
 				title: title,
 			);
 
-			return Ingredient.fromJson(result as Map<String, dynamic>));
+			return Ingredient.fromJson(result as Map<String, dynamic>);
 		} catch (e) {
 			throw Exception('Failed to classify ingredients: $e');
 		}
