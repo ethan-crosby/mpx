@@ -14,9 +14,26 @@ class IngredientSearchView extends StatefulWidget {
 }
 
 class _IngredientSearchView extends State<IngredientSearchView> {
+	late final FocusNode _searchFocusNode;
+	late final TextEditingController _controller;
+
 	@override
 	void initState() {
 		super.initState();
+		_searchFocusNode = FocusNode();
+		_controller = TextEditingController();
+
+		// Request focus after the first frame is rendered
+		WidgetsBinding.instance.addPostFrameCallback((_) {
+			_searchFocusNode.requestFocus();
+		});
+	}
+
+	@override
+	void dispose() {
+		_searchFocusNode.dispose();
+		_controller.dispose();
+		super.dispose();
 	}
 
 	@override
@@ -34,13 +51,14 @@ class _IngredientSearchView extends State<IngredientSearchView> {
 							child: Padding(
 								padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
 								child: CupertinoSearchTextField(
+									controller: _controller,
+									focusNode: _searchFocusNode, // <-- attach focus node
 									onChanged: (value) {
 										vm.search(value);
 									},
 								),
 							),
 						),
-
 						SliverList(
 							delegate: SliverChildBuilderDelegate(
 								(context, index) {
