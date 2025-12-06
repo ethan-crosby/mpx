@@ -14,35 +14,24 @@ class IngredientSearchTileWidget extends StatelessWidget {
 
 	@override
 	Widget build(BuildContext context) {
-		return CupertinoContextMenu(
-			actions: [
-				CupertinoContextMenuAction(
-					onPressed: () => Navigator.pop(context),
-					child: const Text('Delete'),
-					isDestructiveAction: true,
-				),
-			],
-			child: CupertinoListTile(
-				title: Text(ingredient.name),
-				leading: const Icon(CupertinoIcons.star),
-				trailing: const Icon(CupertinoIcons.forward),
-				onTap: () {
-					/*
-					showCupertinoDialog(
-						context: context,
-						builder: (_) => CupertinoAlertDialog(
-							title: Text('Tapped on item $index'),
-							actions: [
-								CupertinoDialogAction(
-									child: const Text('OK'),
-									onPressed: () => Navigator.pop(context),
-								),
-							],
-						),
-					);
-					*/
-				},
-			),
+		return CupertinoListTile(
+			title: Text(ingredient.name),
+			onTap: () {
+				/*
+				showCupertinoDialog(
+					context: context,
+					builder: (_) => CupertinoAlertDialog(
+						title: Text('Tapped on item $index'),
+						actions: [
+							CupertinoDialogAction(
+								child: const Text('OK'),
+								onPressed: () => Navigator.pop(context),
+							),
+						],
+					),
+				);
+				*/
+			},
 		);
 	}
 }

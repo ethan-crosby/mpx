@@ -35,13 +35,12 @@ class _IngredientSearchView extends State<IngredientSearchView> {
 								padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
 								child: CupertinoSearchTextField(
 									onChanged: (value) {
-										// vm.filterIngredients(value);
+										vm.search(value);
 									},
 								),
 							),
 						),
 
-						// Ingredient list
 						SliverList(
 							delegate: SliverChildBuilderDelegate(
 								(context, index) {

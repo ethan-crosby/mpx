@@ -5,7 +5,7 @@ class Product {
 	final String title;
 	final String? image;
 	final String? upc;
-	final List<String>? breadcrumbs; // <-- change here
+	final List<String>? breadcrumbs;
 	final String? brand;
 	final List<Ingredient>? ingredients;
 	final Map<String, dynamic>? servings;

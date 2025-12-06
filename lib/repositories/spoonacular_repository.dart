@@ -85,15 +85,16 @@ class SpoonacularRepository {
 		required String query,
 		int number = 10,
 	}) async {
-		final data = await _get(
-			'/food/ingredients/search',
+		final data = await _getList(
+			'/food/ingredients/autocomplete',
 			queryParameters: {
 				'query': query,
 				'number': number.toString(),
+				'metaInformation': 'true',
 			},
 		);
-		if (data.containsKey('results')) {
-			return data['results'] as List<dynamic>;
+		if (data.isNotEmpty) {
+			return data as List<dynamic>;
 		} else {
 			return [];
 		}
