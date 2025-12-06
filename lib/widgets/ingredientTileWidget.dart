@@ -3,6 +3,10 @@ import 'package:provider/provider.dart';
 
 import '../models/ingredient.dart';
 import '../viewModels/ingredientVM.dart';
+import '../viewModels/ingredientDetailVM.dart';
+import '../views/ingredientDetailView.dart';
+import '../services/nutrition_service.dart';
+import '../repositories/spoonacular_repository.dart';
 
 class IngredientTileWidget extends StatelessWidget {
 	final int index;
@@ -16,6 +20,8 @@ class IngredientTileWidget extends StatelessWidget {
 
 	@override
 	Widget build(BuildContext context) {
+		final isEven = index % 2 == 0;
+
 		return LayoutBuilder(
 			builder: (context, constraints) {
 				return CupertinoContextMenu(
@@ -34,11 +40,35 @@ class IngredientTileWidget extends StatelessWidget {
 							minWidth: constraints.maxWidth,
 							maxWidth: constraints.maxWidth,
 						),
-						child: CupertinoListTile(
-							title: Text(ingredient.name),
-							leading: const Icon(CupertinoIcons.star),
-							trailing: const Icon(CupertinoIcons.forward),
-							onTap: () {},
+						child: Container(
+							child: CupertinoListTile(
+								title: Text(ingredient.name),
+								trailing: const Icon(CupertinoIcons.forward),
+								onTap: () {
+									Navigator.of(context).push(
+										CupertinoPageRoute(
+											builder: (_) => MultiProvider(
+												providers: [
+													ProxyProvider<SpoonacularRepository, NutritionService>(
+														update: (_, repo, __) => NutritionService(repo),
+													),
+													ChangeNotifierProvider<IngredientDetailVM>(
+														create: (context) => IngredientDetailVM(
+															context.read<NutritionService>(),
+														),
+													),
+												],
+												child: IngredientDetailView(
+													ingredient: ingredient,
+												),
+											),
+										),
+									);
+								},
+							),
+							color: isEven ?
+								CupertinoColors.systemGrey5.resolveFrom(context) :
+								CupertinoColors.systemGrey6.resolveFrom(context),
 						),
 					),
 				);

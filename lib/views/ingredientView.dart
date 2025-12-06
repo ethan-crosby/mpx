@@ -43,47 +43,42 @@ class _IngredientView extends State<IngredientView> {
 											CupertinoActionSheetAction(
 												isDefaultAction: true,
 												onPressed: () async {
-												  final vm = context.read<IngredientVM>();
+													final vm = context.read<IngredientVM>();
 
-												  Navigator.pop(context);
+													Navigator.pop(context);
 
-												  final ingredient = await Navigator.of(context).push(
-												    CupertinoPageRoute(
-												      builder: (_) => MultiProvider(
-												        providers: [
-												          Provider<SpoonacularRepository>(
-												            create: (_) => SpoonacularRepository(
-												              apiKey: ApiConfig.spoonacularApiKey,
-												            ),
-												          ),
-												          ProxyProvider<SpoonacularRepository, IngredientService>(
-												            update: (_, repo, __) => IngredientService(repo),
-												          ),
-												          ChangeNotifierProvider<IngredientSearchVM>(
-												            create: (context) => IngredientSearchVM(
-												              context.read<IngredientService>(),
-												            ),
-												          ),
-												        ],
-												        child: IngredientSearchView(),
-												      ),
-												    ),
-												  );
+													final ingredient = await Navigator.of(context).push(
+														CupertinoPageRoute(
+															builder: (_) => MultiProvider(
+																providers: [
+																	ChangeNotifierProvider<IngredientSearchVM>(
+																		create: (context) => IngredientSearchVM(
+																			context.read<IngredientService>(),
+																		),
+																	),
+																],
+																child: IngredientSearchView(),
+															),
+														),
+													);
 
-												  vm.addIngredient(ingredient);
+													vm.addIngredient(ingredient);
 												},
 												child: const Text('Search'),
 											),
 											CupertinoActionSheetAction(
 												onPressed: () async {
+													final vm = context.read<IngredientVM>();
+
 													Navigator.pop(context);
+
 													final ingredient = await Navigator.of(context).push(
 														CupertinoPageRoute(
 															builder: (_) => UPCSannerWidget(),
 														),
 													);
 
-													context.read<IngredientVM>().addIngredient(ingredient);
+													vm.addIngredient(ingredient);
 												},
 												child: const Text('Scan UPC'),
 											),
