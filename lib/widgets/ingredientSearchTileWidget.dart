@@ -18,21 +18,6 @@ class IngredientSearchTileWidget extends StatelessWidget {
 			title: Text(ingredient.name),
 			onTap: () {
 				Navigator.pop(context, ingredient);
-
-				/*
-				showCupertinoDialog(
-					context: context,
-					builder: (_) => CupertinoAlertDialog(
-						title: Text('Tapped on item $index'),
-						actions: [
-							CupertinoDialogAction(
-								child: const Text('OK'),
-								onPressed: () => Navigator.pop(context),
-							),
-						],
-					),
-				);
-				*/
 			},
 		);
 	}

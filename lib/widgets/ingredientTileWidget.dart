@@ -37,22 +37,7 @@ class IngredientTileWidget extends StatelessWidget {
 							title: Text(ingredient.name),
 							leading: const Icon(CupertinoIcons.star),
 							trailing: const Icon(CupertinoIcons.forward),
-							onTap: () {
-								/*
-								showCupertinoDialog(
-									context: context,
-									builder: (_) => CupertinoAlertDialog(
-										title: Text('Tapped on item $index'),
-										actions: [
-											CupertinoDialogAction(
-												child: const Text('OK'),
-												onPressed: () => Navigator.pop(context),
-											),
-										],
-									),
-								);
-								*/
-							},
+							onTap: () {},
 						),
 					),
 				);
