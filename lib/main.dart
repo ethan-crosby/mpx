@@ -42,7 +42,6 @@ class MyApp extends StatelessWidget {
 			child: CupertinoApp(
 				title: 'Recipe Finder',
 				theme: CupertinoThemeData(
-					// This automatically adapts to light/dark if you use system colors
 					primaryColor: CupertinoColors.activeBlue,
 					scaffoldBackgroundColor: CupertinoColors.systemGroupedBackground, 
 					barBackgroundColor: CupertinoColors.systemGroupedBackground,

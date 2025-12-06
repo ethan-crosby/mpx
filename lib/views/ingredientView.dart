@@ -156,18 +156,28 @@ class _IngredientView extends State<IngredientView> {
 							settings: LiquidGlassSettings(
 								thickness: 20,
 								saturation: 1.5,
-								glassColor: CupertinoColors.inactiveGray.resolveFrom(context),
-								ambientStrength: 1.5,
-							),
-							child: LiquidGlass(
-								shape: LiquidRoundedSuperellipse(
-									borderRadius: 50,
+								glassColor: Color.fromRGBO(
+									(CupertinoColors.systemGroupedBackground.resolveFrom(context).red + 200).clamp(0, 255),
+									(CupertinoColors.systemGroupedBackground.resolveFrom(context).green + 200).clamp(0, 255),
+									(CupertinoColors.systemGroupedBackground.resolveFrom(context).blue + 200).clamp(0, 255),
+									MediaQuery.of(context).platformBrightness == Brightness.dark ? 0.15 : 1.0,
 								),
-								child: Container(
-									child: Center(
-										child: Padding(
-											padding: EdgeInsets.all(16),
-											child: Text('Search Recipes'),
+								ambientStrength: 1.5,
+								refractiveIndex: 1.5,
+							),
+							child: LiquidStretch(
+								stretch: 0.5,
+								interactionScale: 1.05,
+								child: LiquidGlass(
+									shape: LiquidRoundedSuperellipse(
+										borderRadius: 50,
+									),
+									child: Container(
+										child: Center(
+											child: Padding(
+												padding: EdgeInsets.all(16),
+												child: Text('Search Recipes'),
+											),
 										),
 									),
 								),
