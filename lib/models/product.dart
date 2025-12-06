@@ -19,6 +19,7 @@ class Product {
 		this.breadcrumbs,
 		this.brand,
 		this.ingredients,
+		this.servings,
 		this.price,
 	});
 
