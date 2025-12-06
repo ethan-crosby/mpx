@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../viewModels/ingredientSearchVM.dart';
@@ -13,7 +14,7 @@ class IngredientSearchView extends StatefulWidget {
 	State<IngredientSearchView> createState() => _IngredientSearchView();
 }
 
-class _IngredientSearchView extends State<IngredientSearchView> {
+class _IngredientSearchView extends State<IngredientSearchView> with TickerProviderStateMixin {
 	late final FocusNode _searchFocusNode;
 	late final TextEditingController _controller;
 
@@ -23,7 +24,6 @@ class _IngredientSearchView extends State<IngredientSearchView> {
 		_searchFocusNode = FocusNode();
 		_controller = TextEditingController();
 
-		// Request focus after the first frame is rendered
 		WidgetsBinding.instance.addPostFrameCallback((_) {
 			_searchFocusNode.requestFocus();
 		});
@@ -59,18 +59,44 @@ class _IngredientSearchView extends State<IngredientSearchView> {
 								),
 							),
 						),
-						SliverList(
-							delegate: SliverChildBuilderDelegate(
-								(context, index) {
-									final ingredient = vm.ingredients[index];
-									return IngredientSearchTileWidget(
-										index: index,
-										ingredient: ingredient,
-									);
-								},
-								childCount: vm.ingredients.length,
+						if (vm.loading)
+							SliverToBoxAdapter(
+								child: Center(child: CupertinoActivityIndicator()),
+							)
+						else
+							SliverList(
+								delegate: SliverChildBuilderDelegate(
+									(context, index) {
+										final ingredient = vm.ingredients[index];
+
+										final itemController = AnimationController(
+											duration: const Duration(milliseconds: 500),
+											vsync: this,
+										);
+
+										final delay = (index * 10) / 100.0;
+										final animation = Tween<double>(begin: 0.0, end: 1.0).animate(
+											CurvedAnimation(
+												parent: itemController,
+												curve: Interval(delay, 1.0, curve: Curves.easeOut),
+											),
+										);
+
+										WidgetsBinding.instance.addPostFrameCallback((_) {
+											itemController.forward();
+										});
+
+										return FadeTransition(
+											opacity: animation,
+											child: IngredientSearchTileWidget(
+												index: index,
+												ingredient: ingredient,
+											),
+										);
+									},
+									childCount: vm.ingredients.length,
+								),
 							),
-						),
 					],
 				),
 			),

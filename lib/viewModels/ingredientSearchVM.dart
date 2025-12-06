@@ -14,7 +14,13 @@ class IngredientSearchVM extends ChangeNotifier {
 
 	Timer? _debounce;
 
+	bool _loading = false;
+	bool get loading => _loading;
+
 	void search(String query) {
+		_loading = true;
+		notifyListeners();
+
 		_debounce?.cancel();
 
 		_debounce = Timer(const Duration(milliseconds: 300), () async {
@@ -26,6 +32,7 @@ class IngredientSearchVM extends ChangeNotifier {
 		try {
 			if (query.isEmpty) {
 				_ingredients = [];
+				_loading = false;
 				notifyListeners();
 				return;
 			}
@@ -35,6 +42,9 @@ class IngredientSearchVM extends ChangeNotifier {
 		} catch (e) {
 			print('Error: $e');
 		}
+
+		_loading = false;
+		notifyListeners();
 	}
 
 	// Runs in background isolate
