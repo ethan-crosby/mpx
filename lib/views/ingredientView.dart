@@ -181,6 +181,7 @@ class _IngredientView extends State<IngredientView> {
 										child: CupertinoButton(
 											onPressed: () async {
 												final navigator = Navigator.of(context);
+												final vm = context.read<IngredientVM>();
 
 												await navigator.push(
 													CupertinoPageRoute(
@@ -193,6 +194,7 @@ class _IngredientView extends State<IngredientView> {
 																ChangeNotifierProvider<RecipeVM>(
 																	create: (context) => RecipeVM(
 																		context.read<RecipeService>(),
+																		vm.ingredients,
 																	),
 																),
 															],
