@@ -4,10 +4,11 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i4;
-import 'dart:ui' as _i5;
+import 'dart:ui' as _i6;
 
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mpx/models/ingredient.dart' as _i3;
+import 'package:mpx/models/product.dart' as _i5;
 import 'package:mpx/viewModels/ingredientVM.dart' as _i2;
 
 // ignore_for_file: type=lint
@@ -70,6 +71,14 @@ class MockIngredientVM extends _i1.Mock implements _i2.IngredientVM {
   );
 
   @override
+  _i4.Future<_i3.Ingredient?> classifyProduct(_i5.Product? product) =>
+      (super.noSuchMethod(
+            Invocation.method(#classifyProduct, [product]),
+            returnValue: _i4.Future<_i3.Ingredient?>.value(),
+          )
+          as _i4.Future<_i3.Ingredient?>);
+
+  @override
   _i4.Future<void> init() =>
       (super.noSuchMethod(
             Invocation.method(#init, []),
@@ -79,13 +88,13 @@ class MockIngredientVM extends _i1.Mock implements _i2.IngredientVM {
           as _i4.Future<void>);
 
   @override
-  void addListener(_i5.VoidCallback? listener) => super.noSuchMethod(
+  void addListener(_i6.VoidCallback? listener) => super.noSuchMethod(
     Invocation.method(#addListener, [listener]),
     returnValueForMissingStub: null,
   );
 
   @override
-  void removeListener(_i5.VoidCallback? listener) => super.noSuchMethod(
+  void removeListener(_i6.VoidCallback? listener) => super.noSuchMethod(
     Invocation.method(#removeListener, [listener]),
     returnValueForMissingStub: null,
   );

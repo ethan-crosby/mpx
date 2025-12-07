@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:mpx/models/ingredient.dart';
 import 'package:mpx/repositories/spoonacular_repository.dart';
 import 'package:mpx/services/ingredient_service.dart';
+import 'package:mpx/services/classify_service.dart';
 import 'package:mpx/viewModels/ingredientVM.dart';
 import 'package:mpx/storage/localStore.dart';
 import 'package:mpx/views/ingredientView.dart';
@@ -69,9 +70,13 @@ void main() {
             ProxyProvider<SpoonacularRepository, IngredientService>(
               update: (_, repo, __) => IngredientService(repo),
             ),
+            ProxyProvider<SpoonacularRepository, ClassifyService>(
+              update: (_, repo, __) => ClassifyService(repo),
+            ),
             ChangeNotifierProvider<IngredientVM>(
               create: (context) => IngredientVM(
                 context.read<IngredientService>(),
+                context.read<ClassifyService>(),
                 context.read<LocalStore>(),
               ),
             ),
@@ -101,6 +106,7 @@ void main() {
       when(mockLocalStore.writeIngredients(any)).thenAnswer((_) async => {});
 
       final ingredientService = IngredientService(mockRepository);
+      final classifyService = ClassifyService(mockRepository);
 
       final app = CupertinoApp(
         home: MultiProvider(
@@ -108,9 +114,10 @@ void main() {
             Provider<SpoonacularRepository>.value(value: mockRepository),
             Provider<LocalStore>.value(value: mockLocalStore),
             Provider<IngredientService>.value(value: ingredientService),
+            Provider<ClassifyService>.value(value: classifyService),
             ChangeNotifierProvider<IngredientVM>(
               create: (context) =>
-                  IngredientVM(ingredientService, mockLocalStore),
+                  IngredientVM(ingredientService, classifyService, mockLocalStore),
             ),
           ],
           child: IngredientView(),
@@ -142,6 +149,7 @@ void main() {
       when(mockLocalStore.writeIngredients(any)).thenAnswer((_) async => {});
 
       final ingredientService = IngredientService(mockRepository);
+      final classifyService = ClassifyService(mockRepository);
 
       final app = CupertinoApp(
         home: MultiProvider(
@@ -149,9 +157,10 @@ void main() {
             Provider<SpoonacularRepository>.value(value: mockRepository),
             Provider<LocalStore>.value(value: mockLocalStore),
             Provider<IngredientService>.value(value: ingredientService),
+            Provider<ClassifyService>.value(value: classifyService),
             ChangeNotifierProvider<IngredientVM>(
               create: (context) =>
-                  IngredientVM(ingredientService, mockLocalStore),
+                  IngredientVM(ingredientService, classifyService, mockLocalStore),
             ),
           ],
           child: IngredientView(),
@@ -184,6 +193,7 @@ void main() {
       when(mockLocalStore.writeIngredients(any)).thenAnswer((_) async => {});
 
       final ingredientService = IngredientService(mockRepository);
+      final classifyService = ClassifyService(mockRepository);
 
       final app = CupertinoApp(
         home: MultiProvider(
@@ -191,9 +201,10 @@ void main() {
             Provider<SpoonacularRepository>.value(value: mockRepository),
             Provider<LocalStore>.value(value: mockLocalStore),
             Provider<IngredientService>.value(value: ingredientService),
+            Provider<ClassifyService>.value(value: classifyService),
             ChangeNotifierProvider<IngredientVM>(
               create: (context) =>
-                  IngredientVM(ingredientService, mockLocalStore),
+                  IngredientVM(ingredientService, classifyService, mockLocalStore),
             ),
           ],
           child: IngredientView(),
@@ -217,6 +228,7 @@ void main() {
       when(mockLocalStore.writeIngredients(any)).thenAnswer((_) async => {});
 
       final ingredientService = IngredientService(mockRepository);
+      final classifyService = ClassifyService(mockRepository);
 
       final app = CupertinoApp(
         home: MultiProvider(
@@ -224,9 +236,10 @@ void main() {
             Provider<SpoonacularRepository>.value(value: mockRepository),
             Provider<LocalStore>.value(value: mockLocalStore),
             Provider<IngredientService>.value(value: ingredientService),
+            Provider<ClassifyService>.value(value: classifyService),
             ChangeNotifierProvider<IngredientVM>(
               create: (context) =>
-                  IngredientVM(ingredientService, mockLocalStore),
+                  IngredientVM(ingredientService, classifyService, mockLocalStore),
             ),
           ],
           child: IngredientView(),
@@ -263,6 +276,7 @@ void main() {
       when(mockLocalStore.writeIngredients(any)).thenAnswer((_) async => {});
 
       final ingredientService = IngredientService(mockRepository);
+      final classifyService = ClassifyService(mockRepository);
 
       final app = CupertinoApp(
         home: MultiProvider(
@@ -270,9 +284,10 @@ void main() {
             Provider<SpoonacularRepository>.value(value: mockRepository),
             Provider<LocalStore>.value(value: mockLocalStore),
             Provider<IngredientService>.value(value: ingredientService),
+            Provider<ClassifyService>.value(value: classifyService),
             ChangeNotifierProvider<IngredientVM>(
               create: (context) =>
-                  IngredientVM(ingredientService, mockLocalStore),
+                  IngredientVM(ingredientService, classifyService, mockLocalStore),
             ),
           ],
           child: IngredientView(),
@@ -301,6 +316,7 @@ void main() {
       when(mockLocalStore.writeIngredients(any)).thenAnswer((_) async => {});
 
       final ingredientService = IngredientService(mockRepository);
+      final classifyService = ClassifyService(mockRepository);
 
       final app = CupertinoApp(
         home: MultiProvider(
@@ -308,9 +324,10 @@ void main() {
             Provider<SpoonacularRepository>.value(value: mockRepository),
             Provider<LocalStore>.value(value: mockLocalStore),
             Provider<IngredientService>.value(value: ingredientService),
+            Provider<ClassifyService>.value(value: classifyService),
             ChangeNotifierProvider<IngredientVM>(
               create: (context) =>
-                  IngredientVM(ingredientService, mockLocalStore),
+                  IngredientVM(ingredientService, classifyService, mockLocalStore),
             ),
           ],
           child: IngredientView(),
@@ -339,6 +356,7 @@ void main() {
       when(mockLocalStore.writeIngredients(any)).thenAnswer((_) async => {});
 
       final ingredientService = IngredientService(mockRepository);
+      final classifyService = ClassifyService(mockRepository);
 
       final app = CupertinoApp(
         home: MultiProvider(
@@ -346,9 +364,10 @@ void main() {
             Provider<SpoonacularRepository>.value(value: mockRepository),
             Provider<LocalStore>.value(value: mockLocalStore),
             Provider<IngredientService>.value(value: ingredientService),
+            Provider<ClassifyService>.value(value: classifyService),
             ChangeNotifierProvider<IngredientVM>(
               create: (context) =>
-                  IngredientVM(ingredientService, mockLocalStore),
+                  IngredientVM(ingredientService, classifyService, mockLocalStore),
             ),
           ],
           child: IngredientView(),

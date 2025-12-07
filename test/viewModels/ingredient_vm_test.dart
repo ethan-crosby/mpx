@@ -3,18 +3,20 @@ import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mpx/models/ingredient.dart';
 import 'package:mpx/services/ingredient_service.dart';
+import 'package:mpx/services/classify_service.dart';
 import 'package:mpx/storage/localStore.dart';
 import 'package:mpx/viewModels/ingredientVM.dart';
-
 import 'ingredient_vm_test.mocks.dart';
 
-@GenerateMocks([IngredientService, LocalStore])
+@GenerateMocks([IngredientService, ClassifyService, LocalStore])
 void main() {
   late MockIngredientService mockService;
+  late MockClassifyService mockClassifyService;
   late MockLocalStore mockStore;
 
   setUp(() {
     mockService = MockIngredientService();
+    mockClassifyService = MockClassifyService();
     mockStore = MockLocalStore();
   });
 
@@ -25,7 +27,7 @@ void main() {
       when(mockStore.readIngredients()).thenAnswer((_) async => []);
 
       // Act
-      final vm = IngredientVM(mockService, mockStore);
+      final vm = IngredientVM(mockService, mockClassifyService, mockStore);
 
       // Initial state before init completes
       expect(vm.loading, true);
@@ -50,7 +52,7 @@ void main() {
       ).thenAnswer((_) async => storedIngredients);
 
       // Act
-      final vm = IngredientVM(mockService, mockStore);
+      final vm = IngredientVM(mockService, mockClassifyService, mockStore);
       await Future.delayed(Duration(milliseconds: 100));
 
       // Assert
@@ -65,7 +67,7 @@ void main() {
       when(mockStore.readIngredients()).thenAnswer((_) async => []);
 
       // Act
-      final vm = IngredientVM(mockService, mockStore);
+      final vm = IngredientVM(mockService, mockClassifyService, mockStore);
       await Future.delayed(Duration(milliseconds: 100));
 
       // Assert
@@ -78,7 +80,7 @@ void main() {
       when(mockStore.readIngredients()).thenAnswer((_) async => []);
       when(mockStore.writeIngredients(any)).thenAnswer((_) async => {});
 
-      final vm = IngredientVM(mockService, mockStore);
+      final vm = IngredientVM(mockService, mockClassifyService, mockStore);
       await Future.delayed(Duration(milliseconds: 100));
 
       final newIngredient = Ingredient(id: 1, name: 'Tomato');
@@ -100,7 +102,7 @@ void main() {
       when(mockStore.readIngredients()).thenAnswer((_) async => []);
       when(mockStore.writeIngredients(any)).thenAnswer((_) async => {});
 
-      final vm = IngredientVM(mockService, mockStore);
+      final vm = IngredientVM(mockService, mockClassifyService, mockStore);
       await Future.delayed(Duration(milliseconds: 100));
 
       // Act
@@ -125,7 +127,7 @@ void main() {
       ).thenAnswer((_) async => initialIngredients);
       when(mockStore.writeIngredients(any)).thenAnswer((_) async => {});
 
-      final vm = IngredientVM(mockService, mockStore);
+      final vm = IngredientVM(mockService, mockClassifyService, mockStore);
       await Future.delayed(Duration(milliseconds: 100));
 
       bool notified = false;
@@ -148,7 +150,7 @@ void main() {
       ).thenAnswer((_) async => [Ingredient(id: 1, name: 'Tomato')]);
       when(mockStore.writeIngredients(any)).thenAnswer((_) async => {});
 
-      final vm = IngredientVM(mockService, mockStore);
+      final vm = IngredientVM(mockService, mockClassifyService, mockStore);
       await Future.delayed(Duration(milliseconds: 100));
 
       final nonExistent = Ingredient(id: 99, name: 'NotThere');
@@ -165,7 +167,7 @@ void main() {
       // Arrange
       when(mockStore.readIngredients()).thenAnswer((_) async => []);
 
-      final vm = IngredientVM(mockService, mockStore);
+      final vm = IngredientVM(mockService, mockClassifyService, mockStore);
       await Future.delayed(Duration(milliseconds: 100));
 
       bool notified = false;
@@ -183,7 +185,7 @@ void main() {
       when(mockStore.readIngredients()).thenAnswer((_) async => []);
       when(mockStore.writeIngredients(any)).thenAnswer((_) async => {});
 
-      final vm = IngredientVM(mockService, mockStore);
+      final vm = IngredientVM(mockService, mockClassifyService, mockStore);
       await Future.delayed(Duration(milliseconds: 100));
 
       bool loadingStateSeen = false;
@@ -205,7 +207,7 @@ void main() {
       when(mockStore.readIngredients()).thenAnswer((_) async => [ingredient]);
       when(mockStore.writeIngredients(any)).thenAnswer((_) async => {});
 
-      final vm = IngredientVM(mockService, mockStore);
+      final vm = IngredientVM(mockService, mockClassifyService, mockStore);
       await Future.delayed(Duration(milliseconds: 100));
 
       bool loadingStateSeen = false;
@@ -226,7 +228,7 @@ void main() {
       when(mockStore.readIngredients()).thenAnswer((_) async => []);
       when(mockStore.writeIngredients(any)).thenAnswer((_) async => {});
 
-      final vm = IngredientVM(mockService, mockStore);
+      final vm = IngredientVM(mockService, mockClassifyService, mockStore);
       await Future.delayed(Duration(milliseconds: 100));
 
       int notifyCount = 0;

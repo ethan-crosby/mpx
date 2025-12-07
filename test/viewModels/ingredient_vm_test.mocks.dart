@@ -8,8 +8,9 @@ import 'dart:async' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mpx/models/ingredient.dart' as _i5;
 import 'package:mpx/repositories/spoonacular_repository.dart' as _i2;
+import 'package:mpx/services/classify_service.dart' as _i6;
 import 'package:mpx/services/ingredient_service.dart' as _i3;
-import 'package:mpx/storage/localStore.dart' as _i6;
+import 'package:mpx/storage/localStore.dart' as _i7;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -76,10 +77,38 @@ class MockIngredientService extends _i1.Mock implements _i3.IngredientService {
           as _i4.Future<_i5.Ingredient?>);
 }
 
+/// A class which mocks [ClassifyService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockClassifyService extends _i1.Mock implements _i6.ClassifyService {
+  MockClassifyService() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i2.SpoonacularRepository get repository =>
+      (super.noSuchMethod(
+            Invocation.getter(#repository),
+            returnValue: _FakeSpoonacularRepository_0(
+              this,
+              Invocation.getter(#repository),
+            ),
+          )
+          as _i2.SpoonacularRepository);
+
+  @override
+  _i4.Future<_i5.Ingredient?> classify({required String? title}) =>
+      (super.noSuchMethod(
+            Invocation.method(#classify, [], {#title: title}),
+            returnValue: _i4.Future<_i5.Ingredient?>.value(),
+          )
+          as _i4.Future<_i5.Ingredient?>);
+}
+
 /// A class which mocks [LocalStore].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockLocalStore extends _i1.Mock implements _i6.LocalStore {
+class MockLocalStore extends _i1.Mock implements _i7.LocalStore {
   MockLocalStore() {
     _i1.throwOnMissingStub(this);
   }

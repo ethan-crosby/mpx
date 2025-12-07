@@ -4,16 +4,17 @@ import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mpx/repositories/spoonacular_repository.dart';
-
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'spoonacular_repository_test.mocks.dart';
 
 @GenerateMocks([http.Client])
 void main() {
   late MockClient mockClient;
   late SpoonacularRepository repository;
-  const testApiKey = 'test_api_key';
+  late String testApiKey;
 
   setUp(() {
+    testApiKey = dotenv.env['SPOONACULAR_API_KEY'] ?? '';
     mockClient = MockClient();
     repository = SpoonacularRepository(apiKey: testApiKey, client: mockClient);
   });
@@ -316,8 +317,8 @@ void main() {
       });
     });
 
-    group('classifyProduct', () {
-      test('should return classification data when successful', () async {
+    group('classifyProductCategory', () {
+      test('should return category string when successful', () async {
         // Arrange
         final mockResponse = {'category': 'Condiment', 'confidence': 0.95};
 
@@ -332,13 +333,16 @@ void main() {
         );
 
         // Act
-        final result = await repository.classifyProduct(title: 'Tomato Sauce');
+        final result = await repository.classifyProductCategory(
+          title: 'Tomato Sauce',
+        );
 
         // Assert
-        expect(result, isA<List<dynamic>>());
+        expect(result, isA<String>());
+        expect(result, 'Condiment');
       });
 
-      test('should return empty list when response is empty', () async {
+      test('should return null when response is empty', () async {
         // Arrange
         when(
           mockClient.post(
@@ -349,10 +353,12 @@ void main() {
         ).thenAnswer((_) async => http.Response(json.encode({}), 200));
 
         // Act
-        final result = await repository.classifyProduct(title: 'Test Product');
+        final result = await repository.classifyProductCategory(
+          title: 'Test Product',
+        );
 
         // Assert
-        expect(result, isEmpty);
+        expect(result, isNull);
       });
 
       test('should throw exception on error', () async {
@@ -367,7 +373,7 @@ void main() {
 
         // Act & Assert
         expect(
-          () => repository.classifyProduct(title: 'Test'),
+          () => repository.classifyProductCategory(title: 'Test'),
           throwsA(isA<Exception>()),
         );
       });

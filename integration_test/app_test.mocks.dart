@@ -96,12 +96,12 @@ class MockSpoonacularRepository extends _i1.Mock
           as _i5.Future<List<dynamic>>);
 
   @override
-  _i5.Future<List<dynamic>> classifyProduct({required String? title}) =>
+  _i5.Future<String?> classifyProductCategory({required String? title}) =>
       (super.noSuchMethod(
-            Invocation.method(#classifyProduct, [], {#title: title}),
-            returnValue: _i5.Future<List<dynamic>>.value(<dynamic>[]),
+            Invocation.method(#classifyProductCategory, [], {#title: title}),
+            returnValue: _i5.Future<String?>.value(),
           )
-          as _i5.Future<List<dynamic>>);
+          as _i5.Future<String?>);
 
   @override
   _i5.Future<List<dynamic>> getRecipesByIngredients({
