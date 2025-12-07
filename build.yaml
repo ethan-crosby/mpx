@@ -1,0 +1,8 @@
+# Points build_runner to generate mock files for the integration test suite
+targets:
+  $default:
+    builders:
+      mockito|mockBuilder:
+        generate_for:
+          - test/**_test.dart
+          - integration_test/**_test.dart
