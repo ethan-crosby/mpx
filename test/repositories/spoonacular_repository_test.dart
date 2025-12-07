@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mpx/repositories/spoonacular_repository.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'spoonacular_repository_test.mocks.dart';
 
 @GenerateMocks([http.Client])
@@ -14,7 +13,7 @@ void main() {
   late String testApiKey;
 
   setUp(() {
-    testApiKey = dotenv.env['SPOONACULAR_API_KEY'] ?? '';
+    testApiKey = 'FAKE_TEST_API_KEY';
     mockClient = MockClient();
     repository = SpoonacularRepository(apiKey: testApiKey, client: mockClient);
   });

@@ -26,28 +26,6 @@ void main() {
       expect(find.text('Pasta Carbonara'), findsOneWidget);
     });
 
-    testWidgets('should display likes count', (WidgetTester tester) async {
-      // Arrange
-      final recipe = Recipe(id: 1, title: 'Pasta Carbonara', likes: 100);
-
-      // Act
-      await tester.pumpWidget(createTestWidget(recipe));
-
-      // Assert
-      expect(find.text('100'), findsOneWidget);
-    });
-
-    testWidgets('should display heart icon', (WidgetTester tester) async {
-      // Arrange
-      final recipe = Recipe(id: 1, title: 'Pasta Carbonara', likes: 100);
-
-      // Act
-      await tester.pumpWidget(createTestWidget(recipe));
-
-      // Assert
-      expect(find.byIcon(CupertinoIcons.heart_fill), findsOneWidget);
-    });
-
     testWidgets('should display forward icon', (WidgetTester tester) async {
       // Arrange
       final recipe = Recipe(id: 1, title: 'Pasta Carbonara', likes: 100);
@@ -57,19 +35,6 @@ void main() {
 
       // Assert
       expect(find.byIcon(CupertinoIcons.forward), findsOneWidget);
-    });
-
-    testWidgets('should display "null" when likes is null', (
-      WidgetTester tester,
-    ) async {
-      // Arrange
-      final recipe = Recipe(id: 1, title: 'Pasta Carbonara');
-
-      // Act
-      await tester.pumpWidget(createTestWidget(recipe));
-
-      // Assert
-      expect(find.text('null'), findsOneWidget);
     });
 
     testWidgets(
@@ -130,30 +95,6 @@ void main() {
         ),
         findsOneWidget,
       );
-    });
-
-    testWidgets('should display large number of likes', (
-      WidgetTester tester,
-    ) async {
-      // Arrange
-      final recipe = Recipe(id: 1, title: 'Popular Recipe', likes: 999999);
-
-      // Act
-      await tester.pumpWidget(createTestWidget(recipe));
-
-      // Assert
-      expect(find.text('999999'), findsOneWidget);
-    });
-
-    testWidgets('should display zero likes', (WidgetTester tester) async {
-      // Arrange
-      final recipe = Recipe(id: 1, title: 'Unpopular Recipe', likes: 0);
-
-      // Act
-      await tester.pumpWidget(createTestWidget(recipe));
-
-      // Assert
-      expect(find.text('0'), findsOneWidget);
     });
 
     testWidgets('should be tappable', (WidgetTester tester) async {

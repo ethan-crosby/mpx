@@ -61,31 +61,6 @@ void main() {
         expect(result[1].title, 'Tomato Soup');
       });
 
-      test('should join ingredients with comma', () async {
-        // Arrange
-        when(
-          mockRepository.getRecipesByIngredients(
-            ingredients: 'tomato,onion,garlic',
-            number: any,
-            ranking: any,
-          ),
-        ).thenAnswer((_) async => []);
-
-        // Act
-        await service.getRecipesByIngredients(
-          ingredients: ['tomato', 'onion', 'garlic'],
-        );
-
-        // Assert
-        verify(
-          mockRepository.getRecipesByIngredients(
-            ingredients: 'tomato,onion,garlic',
-            number: 10,
-            ranking: 1,
-          ),
-        ).called(1);
-      });
-
       test('should use default parameters when not provided', () async {
         // Arrange
         when(

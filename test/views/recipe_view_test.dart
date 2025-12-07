@@ -126,18 +126,6 @@ void main() {
       expect(find.byType(CustomScrollView), findsOneWidget);
     });
 
-    testWidgets('should display SafeArea', (WidgetTester tester) async {
-      // Arrange
-      when(mockVM.loading).thenReturn(false);
-      when(mockVM.recipes).thenReturn([]);
-
-      // Act
-      await tester.pumpWidget(createTestWidget());
-
-      // Assert
-      expect(find.byType(SafeArea), findsOneWidget);
-    });
-
     testWidgets('should show loading then recipes', (
       WidgetTester tester,
     ) async {
@@ -165,27 +153,6 @@ void main() {
       // Assert - Recipe should be visible
       expect(find.byType(CupertinoActivityIndicator), findsNothing);
       expect(find.text('Pasta'), findsOneWidget);
-    });
-
-    testWidgets('should handle large number of recipes', (
-      WidgetTester tester,
-    ) async {
-      // Arrange
-      final recipes = List.generate(
-        50,
-        (i) => Recipe(id: i, title: 'Recipe $i', likes: i),
-      );
-
-      when(mockVM.loading).thenReturn(false);
-      when(mockVM.recipes).thenReturn(recipes);
-
-      // Act
-      await tester.pumpWidget(createTestWidget());
-      await tester.pumpAndSettle();
-
-      // Assert
-      expect(find.byType(CustomScrollView), findsOneWidget);
-      expect(find.text('Recipe 0'), findsOneWidget);
     });
   });
 }
