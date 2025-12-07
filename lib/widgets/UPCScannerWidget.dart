@@ -44,17 +44,11 @@ class _UPCSannerWidgetState extends State<UPCSannerWidget> {
 					});
 
 					try {
-						/*
 						final product = await upcService.getProductByUPC(barcode.rawValue ?? '');
 
-						final Ingredient finalIngredient = await classifyService.classify(
-							title: product.title,
-						);
-						*/
-
-						Navigator.pop(context/*, finalIngredient*/);
-						/*
-						showCupertinoDialog(
+						Navigator.pop(context, product);
+					} catch (e) {
+						await showCupertinoDialog(
 							context: context,
 							builder: (BuildContext context) {
 								return CupertinoAlertDialog(
@@ -73,9 +67,6 @@ class _UPCSannerWidgetState extends State<UPCSannerWidget> {
 								);
 							},
 						);
-						*/
-					} catch (e) {
-						print('Error: $e');
 						_hasPopped = false;
 					}
 				}

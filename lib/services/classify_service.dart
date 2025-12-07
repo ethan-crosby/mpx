@@ -6,25 +6,27 @@ class ClassifyService {
 
 	ClassifyService(this.repository);
 
-	Future<Ingredient> classify({
+	Future<Ingredient?> classify({
 		required String title,
 	}) async {
 		try {
-			final result = await repository.classifyProduct(
+			final result = await repository.classifyProductCategory(
 				title: title,
 			);
 
-			//final classification = 
+			if (result == null) {
+				return null;
+			}
 
 			final finalIngredient = await repository.searchIngredients(
-				query: 'query',
+				query: result,
 				number: 1,
 			);
 
 			return Ingredient.fromJson(finalIngredient[0] as Map<String, dynamic>);
-			
 		} catch (e) {
-			throw Exception('Failed to classify ingredients: $e');
+			print('Failed to classify ingredients: $e');
+			return null;
 		}
 	}
 }

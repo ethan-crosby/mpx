@@ -2,15 +2,19 @@ import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart';
 
 import '../models/ingredient.dart';
+import '../models/product.dart';
 import '../services/ingredient_service.dart';
+import '../services/classify_service.dart';
 import '../storage/localStore.dart';
 
 class IngredientVM extends ChangeNotifier {
-	final IngredientService _service;
+	final IngredientService _ingredientservice;
+	final ClassifyService _classifyService;
 	final LocalStore _store;
 
 	IngredientVM(
-		this._service,
+		this._ingredientservice,
+		this._classifyService,
 		this._store,
 	) {
 		init();
@@ -46,6 +50,10 @@ class IngredientVM extends ChangeNotifier {
 
 	void changeAmount() {
 		notifyListeners();
+	}
+
+	Future<Ingredient?> classifyProduct(Product product) async {
+		return _classifyService.classify(title: product.title);
 	}
 
 	Future<void> init() async {
