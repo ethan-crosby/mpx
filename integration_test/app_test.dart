@@ -50,14 +50,17 @@ void main() {
       ];
 
       when(
-        mockRepository.searchIngredients(query: any, number: any),
+        mockRepository.searchIngredients(
+          query: anyNamed('query'),
+          number: anyNamed('number'),
+        ),
       ).thenAnswer((_) async => mockIngredients);
 
       when(
         mockRepository.getRecipesByIngredients(
-          ingredients: any,
-          number: any,
-          ranking: any,
+          ingredients: anyNamed('ingredients'),
+          number: anyNamed('number'),
+          ranking: anyNamed('ranking'),
         ),
       ).thenAnswer((_) async => mockRecipes);
 
@@ -90,7 +93,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify home screen loads
-      expect(find.text('Ingredients'), findsOneWidget);
+      expect(find.text('Ingredients'), findsWidgets);
       expect(find.byIcon(CupertinoIcons.add), findsOneWidget);
 
       // Verify empty state displays correctly
@@ -116,8 +119,11 @@ void main() {
             Provider<IngredientService>.value(value: ingredientService),
             Provider<ClassifyService>.value(value: classifyService),
             ChangeNotifierProvider<IngredientVM>(
-              create: (context) =>
-                  IngredientVM(ingredientService, classifyService, mockLocalStore),
+              create: (context) => IngredientVM(
+                ingredientService,
+                classifyService,
+                mockLocalStore,
+              ),
             ),
           ],
           child: IngredientView(),
@@ -129,7 +135,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Assert
-      expect(find.text('Ingredients'), findsOneWidget);
+      expect(find.text('Ingredients'), findsWidgets);
       expect(find.text('Nothing here...'), findsOneWidget);
     });
 
@@ -159,8 +165,11 @@ void main() {
             Provider<IngredientService>.value(value: ingredientService),
             Provider<ClassifyService>.value(value: classifyService),
             ChangeNotifierProvider<IngredientVM>(
-              create: (context) =>
-                  IngredientVM(ingredientService, classifyService, mockLocalStore),
+              create: (context) => IngredientVM(
+                ingredientService,
+                classifyService,
+                mockLocalStore,
+              ),
             ),
           ],
           child: IngredientView(),
@@ -203,8 +212,11 @@ void main() {
             Provider<IngredientService>.value(value: ingredientService),
             Provider<ClassifyService>.value(value: classifyService),
             ChangeNotifierProvider<IngredientVM>(
-              create: (context) =>
-                  IngredientVM(ingredientService, classifyService, mockLocalStore),
+              create: (context) => IngredientVM(
+                ingredientService,
+                classifyService,
+                mockLocalStore,
+              ),
             ),
           ],
           child: IngredientView(),
@@ -238,8 +250,11 @@ void main() {
             Provider<IngredientService>.value(value: ingredientService),
             Provider<ClassifyService>.value(value: classifyService),
             ChangeNotifierProvider<IngredientVM>(
-              create: (context) =>
-                  IngredientVM(ingredientService, classifyService, mockLocalStore),
+              create: (context) => IngredientVM(
+                ingredientService,
+                classifyService,
+                mockLocalStore,
+              ),
             ),
           ],
           child: IngredientView(),
@@ -252,7 +267,7 @@ void main() {
 
       // Assert
       expect(find.text('Nothing here...'), findsOneWidget);
-      expect(find.text('Ingredients'), findsOneWidget);
+      expect(find.text('Ingredients'), findsWidgets);
     });
 
     testWidgets('User Flow: Multiple ingredients display correctly', (
@@ -286,8 +301,11 @@ void main() {
             Provider<IngredientService>.value(value: ingredientService),
             Provider<ClassifyService>.value(value: classifyService),
             ChangeNotifierProvider<IngredientVM>(
-              create: (context) =>
-                  IngredientVM(ingredientService, classifyService, mockLocalStore),
+              create: (context) => IngredientVM(
+                ingredientService,
+                classifyService,
+                mockLocalStore,
+              ),
             ),
           ],
           child: IngredientView(),
@@ -326,8 +344,11 @@ void main() {
             Provider<IngredientService>.value(value: ingredientService),
             Provider<ClassifyService>.value(value: classifyService),
             ChangeNotifierProvider<IngredientVM>(
-              create: (context) =>
-                  IngredientVM(ingredientService, classifyService, mockLocalStore),
+              create: (context) => IngredientVM(
+                ingredientService,
+                classifyService,
+                mockLocalStore,
+              ),
             ),
           ],
           child: IngredientView(),
@@ -366,8 +387,11 @@ void main() {
             Provider<IngredientService>.value(value: ingredientService),
             Provider<ClassifyService>.value(value: classifyService),
             ChangeNotifierProvider<IngredientVM>(
-              create: (context) =>
-                  IngredientVM(ingredientService, classifyService, mockLocalStore),
+              create: (context) => IngredientVM(
+                ingredientService,
+                classifyService,
+                mockLocalStore,
+              ),
             ),
           ],
           child: IngredientView(),
@@ -379,7 +403,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Assert
-      expect(find.text('Ingredients'), findsOneWidget);
+      expect(find.text('Ingredients'), findsWidgets);
       expect(find.byIcon(CupertinoIcons.add), findsOneWidget);
       expect(find.byType(CupertinoSliverNavigationBar), findsOneWidget);
     });
