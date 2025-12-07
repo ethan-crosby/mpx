@@ -13,6 +13,5 @@
 	* Add sort option time permitting
 
 ## TODO
-* Fix the bardcode lookup system
 * Write readme
 * Testing
