@@ -5,13 +5,16 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../viewModels/ingredientVM.dart';
 import '../viewModels/ingredientSearchVM.dart';
+import '../viewModels/recipeVM.dart';
 import '../widgets/ingredientTileWidget.dart';
 import '../widgets/UPCScannerWidget.dart';
 import './ingredientSearchView.dart';
 import '../config/api_config.dart';
 import '../repositories/spoonacular_repository.dart';
 import '../services/ingredient_service.dart';
+import '../services/recipe_service.dart';
 import '../views/amountView.dart';
+import '../views/recipeView.dart';
 import '../models/ingredient.dart';
 
 class IngredientView extends StatefulWidget {
@@ -176,8 +179,27 @@ class _IngredientView extends State<IngredientView> {
 										glowColor: CupertinoColors.white.withOpacity(0.24),
 										glowRadius: 1.0,
 										child: CupertinoButton(
-											onPressed: () {
-												print("Widget clicked!");
+											onPressed: () async {
+												final navigator = Navigator.of(context);
+
+												await navigator.push(
+													CupertinoPageRoute(
+														builder: (_) => MultiProvider(
+															providers: [
+																ProxyProvider<SpoonacularRepository, RecipeService>(
+																	update: (_, repo, __) => RecipeService(repo),
+																),
+
+																ChangeNotifierProvider<RecipeVM>(
+																	create: (context) => RecipeVM(
+																		context.read<RecipeService>(),
+																	),
+																),
+															],
+															child: RecipeView(),
+														),
+													),
+												);
 											},
 											child: Text(
 												'Search Recipes',
