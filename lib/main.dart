@@ -10,6 +10,7 @@ import 'repositories/spoonacular_repository.dart';
 import 'services/ingredient_service.dart';
 import 'services/recipe_service.dart';
 import 'services/upc_service.dart';
+import 'storage/localStore.dart';
 
 void main() async {
 	await dotenv.load(fileName: '.env');
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
 						apiKey: ApiConfig.spoonacularApiKey,
 					),
 				),
+				Provider<LocalStore>(create: (_) => LocalStore()),
 
 				ProxyProvider<SpoonacularRepository, IngredientService>(
 					update: (_, repo, __) => IngredientService(repo),
@@ -36,6 +38,7 @@ class MyApp extends StatelessWidget {
 				ChangeNotifierProvider<IngredientVM>(
 					create: (context) => IngredientVM(
 						context.read<IngredientService>(),
+						context.read<LocalStore>(),
 					),
 				),
 			],

@@ -24,7 +24,11 @@ class IngredientSearchVM extends ChangeNotifier {
 		_debounce?.cancel();
 
 		_debounce = Timer(const Duration(milliseconds: 300), () async {
-			await _searchAsync(query);
+			try {
+				await _searchAsync(query);
+			} catch (e) {
+				print('Search failed. Did you navigate away?');
+			}
 		});
 	}
 

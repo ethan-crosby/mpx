@@ -119,36 +119,40 @@ class _IngredientView extends State<IngredientView> {
 
 							SliverSafeArea(
 								top: false,
-								sliver: SliverList(
-									delegate: SliverChildBuilderDelegate(
-										(context, index) {
-											final vm = context.watch<IngredientVM>();
-											final ingredients = vm.ingredients;
+								sliver: context.watch<IngredientVM>().loading ?
+									SliverToBoxAdapter(
+										child: Center(child: CupertinoActivityIndicator()),
+									) : 
+									SliverList(
+										delegate: SliverChildBuilderDelegate(
+											(context, index) {
+												final vm = context.watch<IngredientVM>();
+												final ingredients = vm.ingredients;
 
-											if (ingredients.isEmpty) {
-												return Padding(
-													padding: const EdgeInsets.all(16.0),
-													child: Text(
-														'Nothing here...',
-														style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
-																	fontSize: 17,
-																	color: CupertinoColors.systemGrey,
-																),
-														textAlign: TextAlign.center,
-													),
+												if (ingredients.isEmpty) {
+													return Padding(
+														padding: const EdgeInsets.all(16.0),
+														child: Text(
+															'Nothing here...',
+															style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
+																		fontSize: 17,
+																		color: CupertinoColors.systemGrey,
+																	),
+															textAlign: TextAlign.center,
+														),
+													);
+												}
+												final ingredient = ingredients[index];
+												return IngredientTileWidget(
+													index: index,
+													ingredient: ingredient,
 												);
-											}
-											final ingredient = ingredients[index];
-											return IngredientTileWidget(
-												index: index,
-												ingredient: ingredient,
-											);
-										},
-										childCount: context.watch<IngredientVM>().ingredients.isEmpty
-												? 1
-												: context.watch<IngredientVM>().ingredients.length,
+											},
+											childCount: context.watch<IngredientVM>().ingredients.isEmpty
+													? 1
+													: context.watch<IngredientVM>().ingredients.length,
+										),
 									),
-								),
 							),
 						],
 					),
