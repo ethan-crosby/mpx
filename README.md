@@ -18,4 +18,4 @@
 * Add recipe search
 * Testing
 * Add launch screen
-* Fix text overflow bugs?
+* Add storage

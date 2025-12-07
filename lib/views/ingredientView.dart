@@ -172,14 +172,18 @@ class _IngredientView extends State<IngredientView> {
 									shape: LiquidRoundedSuperellipse(
 										borderRadius: 50,
 									),
-									child: CupertinoButton(
-										onPressed: () {
-											print("Widget clicked!");
-										},
-										child: Text(
-											'Search Recipes',
-											style: TextStyle(
-												color: CupertinoColors.label.resolveFrom(context),
+									child: GlassGlow(
+										glowColor: CupertinoColors.white.withOpacity(0.24),
+										glowRadius: 1.0,
+										child: CupertinoButton(
+											onPressed: () {
+												print("Widget clicked!");
+											},
+											child: Text(
+												'Search Recipes',
+												style: TextStyle(
+													color: CupertinoColors.label.resolveFrom(context),
+												),
 											),
 										),
 									),

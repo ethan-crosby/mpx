@@ -14,7 +14,15 @@ class ClassifyService {
 				title: title,
 			);
 
-			return Ingredient.fromJson(result as Map<String, dynamic>);
+			//final classification = 
+
+			final finalIngredient = await repository.searchIngredients(
+				query: 'query',
+				number: 1,
+			);
+
+			return Ingredient.fromJson(finalIngredient[0] as Map<String, dynamic>);
+			
 		} catch (e) {
 			throw Exception('Failed to classify ingredients: $e');
 		}

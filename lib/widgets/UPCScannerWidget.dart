@@ -44,13 +44,15 @@ class _UPCSannerWidgetState extends State<UPCSannerWidget> {
 					});
 
 					try {
+						/*
 						final product = await upcService.getProductByUPC(barcode.rawValue ?? '');
 
 						final Ingredient finalIngredient = await classifyService.classify(
 							title: product.title,
 						);
+						*/
 
-						Navigator.pop(context, finalIngredient);
+						Navigator.pop(context/*, finalIngredient*/);
 						/*
 						showCupertinoDialog(
 							context: context,
