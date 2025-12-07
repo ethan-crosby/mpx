@@ -9,15 +9,16 @@ MyPantry is a Flutter-based recipe discovery app with an ingredient-level focus.
 
 ## Architecture
 
-This app relies on a Model-View-ViewModel (MVVM) architecture. It also contains services (APIs), data repositories, and local persistent storage. Here is a breakdown:
+This app relies on a Model-View-ViewModel (MVVM) architecture. Here is a breakdown:
 
-Architecture: MVVM (Model-View-ViewModel)
-├── Models (Data structures)
-├── Views (UI components)  
-├── ViewModels (Business logic & state management)
-├── Services (API interactions)
-├── Repository (Data source abstraction)
-└── Storage (Local persistence)
+**Architecture: MVVM (Model-View-ViewModel)**
+
+- **Models** (Data structures)
+- **Views** (UI components)
+- **ViewModels** (Business logic & state management)
+- **Services** (API interactions)
+- **Repository** (Data source abstraction)
+- **Storage** (Local persistence)
 
 ## Core Featureset
 
