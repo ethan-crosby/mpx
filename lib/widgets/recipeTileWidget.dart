@@ -28,7 +28,7 @@ class RecipeTileWidget extends StatelessWidget {
 					maxLines: 2,
 				),
 				subtitle: Text(
-					'Missing ingredients: ${recipe.missedIngredientsCount}',
+					'Missing ingredients: ${recipe.missedIngredientCount}',
 				),
 				trailing: const Icon(CupertinoIcons.forward),
 				onTap: () {
