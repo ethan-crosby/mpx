@@ -86,7 +86,7 @@ class _IngredientView extends State<IngredientView> {
 																	),
 																);
 
-																if(ingredient.amount != null) {																
+																if(ingredient.amount != null) {
 																	vm.addIngredient(ingredient);
 																}
 															}
@@ -96,16 +96,35 @@ class _IngredientView extends State<IngredientView> {
 													CupertinoActionSheetAction(
 														onPressed: () async {
 															final vm = context.read<IngredientVM>();
+															final navigator = Navigator.of(context);
 
-															Navigator.pop(context);
+															navigator.pop(context);
 
-															final ingredient = await Navigator.of(context).push(
+															final product = await navigator.push(
 																CupertinoPageRoute(
 																	builder: (_) => UPCSannerWidget(),
 																),
 															);
 
-															vm.addIngredient(ingredient);
+															if (product != null) {
+																final ingredient = await vm.classifyProduct(product);
+
+																if (ingredient == null) {
+																	return null;
+																}
+
+																await navigator.push(
+																	CupertinoPageRoute(
+																		builder: (_) => AmountView(
+																			ingredient: ingredient,
+																		),
+																	),
+																);
+
+																if(ingredient.amount != null) {
+																	vm.addIngredient(ingredient);
+																}
+															}
 														},
 														child: const Text('Scan Barcode'),
 													),

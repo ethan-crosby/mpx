@@ -27,19 +27,8 @@ class RecipeTileWidget extends StatelessWidget {
 					recipe.title,
 					maxLines: 2,
 				),
-				subtitle: Row(
-					mainAxisSize: MainAxisSize.min,
-					children: [
-						const Icon(
-							CupertinoIcons.heart_fill,
-							size: 15,
-							color: CupertinoColors.destructiveRed,
-						),
-						const SizedBox(width: 6),
-						Text(
-							recipe.likes.toString(),
-						),
-					],
+				subtitle: Text(
+					'Missing ingredients: ${recipe.missedIngredientCount}',
 				),
 				trailing: const Icon(CupertinoIcons.forward),
 				onTap: () {

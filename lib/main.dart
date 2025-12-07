@@ -4,12 +4,12 @@ import 'package:provider/provider.dart';
 
 import 'views/ingredientView.dart';
 import 'viewModels/ingredientVM.dart';
-
 import 'config/api_config.dart';
 import 'repositories/spoonacular_repository.dart';
 import 'services/ingredient_service.dart';
 import 'services/recipe_service.dart';
 import 'services/upc_service.dart';
+import 'services/classify_service.dart';
 import 'storage/localStore.dart';
 
 void main() async {
@@ -34,10 +34,14 @@ class MyApp extends StatelessWidget {
 				ProxyProvider<SpoonacularRepository, IngredientService>(
 					update: (_, repo, __) => IngredientService(repo),
 				),
+				ProxyProvider<SpoonacularRepository, ClassifyService>(
+					update: (_, repo, __) => ClassifyService(repo),
+				),
 
 				ChangeNotifierProvider<IngredientVM>(
 					create: (context) => IngredientVM(
 						context.read<IngredientService>(),
+						context.read<ClassifyService>(),
 						context.read<LocalStore>(),
 					),
 				),

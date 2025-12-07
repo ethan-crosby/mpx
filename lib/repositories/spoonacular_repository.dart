@@ -136,7 +136,7 @@ class SpoonacularRepository {
 		}
 	}
 
-	Future<List<dynamic>> classifyProduct({
+	Future<String?> classifyProductCategory({
 		required String title,
 	}) async {
 		final data = await _post(
@@ -145,10 +145,11 @@ class SpoonacularRepository {
 				'title': title,
 			},
 		);
-		if (data.isNotEmpty) {
-			return data as List<dynamic>;
+
+		if (data != null && data.isNotEmpty) {
+			return (data as Map<String, dynamic>)['category'] as String?;
 		} else {
-			return [];
+			return null;
 		}
 	}
 

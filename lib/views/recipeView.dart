@@ -4,18 +4,6 @@ import 'package:provider/provider.dart';
 import '../viewModels/recipeVM.dart';
 import '../widgets/recipeTileWidget.dart';
 
-/*
-import '../viewModels/ingredientSearchVM.dart';
-import '../widgets/ingredientTileWidget.dart';
-import '../widgets/UPCScannerWidget.dart';
-import './ingredientSearchView.dart';
-import '../config/api_config.dart';
-import '../repositories/spoonacular_repository.dart';
-import '../services/ingredient_service.dart';
-import '../views/amountView.dart';
-import '../models/ingredient.dart';
-*/
-
 class RecipeView extends StatefulWidget {
 	const RecipeView({
 		super.key,
