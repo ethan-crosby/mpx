@@ -101,6 +101,7 @@ class _AmountViewState extends State<AmountView> {
 					header: Text('Quantity of ${ingredient.name}'),
 					children: [
 						CupertinoFormRow(
+							padding: EdgeInsets.all(10),
 							child: CupertinoTextField(
 								controller: _amountController,
 								keyboardType: TextInputType.numberWithOptions(decimal: true),

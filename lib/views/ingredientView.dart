@@ -128,7 +128,7 @@ class _IngredientView extends State<IngredientView> {
 													child: Text(
 														'Nothing here...',
 														style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
-																	fontSize: 20,
+																	fontSize: 17,
 																	color: CupertinoColors.systemGrey,
 																),
 														textAlign: TextAlign.center,
@@ -172,11 +172,14 @@ class _IngredientView extends State<IngredientView> {
 									shape: LiquidRoundedSuperellipse(
 										borderRadius: 50,
 									),
-									child: Container(
-										child: Center(
-											child: Padding(
-												padding: EdgeInsets.all(16),
-												child: Text('Search Recipes'),
+									child: CupertinoButton(
+										onPressed: () {
+											print("Widget clicked!");
+										},
+										child: Text(
+											'Search Recipes',
+											style: TextStyle(
+												color: CupertinoColors.label.resolveFrom(context),
 											),
 										),
 									),
